@@ -30,3 +30,5 @@ Rafaga CPU:
 21 load store
 22 add store
 ```
+
+Se ve cuanto dura cada rafaga. (Contar la cantidad de pasitos en cada cuadradito)
