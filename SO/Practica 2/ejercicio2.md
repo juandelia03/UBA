@@ -11,7 +11,8 @@ pero va a terminar ejecutandose sin starvation despues de algunas vuetlas del RR
 
 ### ii) Es buena idea implementar prioridad?
 ```
-Cuando implementamos prioridades queremos en las colas mas prioritarias a los procesos que usan poco CPU/se bloquean rapido. Entonces armariamos dos colas, una para P0 y P1 que sabemos que se bloquean mucho 
+Cuando implementamos prioridades queremos en las colas mas prioritarias a los procesos que usan poco CPU/se bloquean rapido.
+Entonces armariamos dos colas, una para P0 y P1 que sabemos que se bloquean mucho 
 y la otra, menos prioritaria, para P2 que tiene rafagas prolongadas de CPU. 
 Esta estrategia puede llevar a starvation de P2 si siempre se pasan el scheduler entre P0 Y P1.
 Ademas en los momentos que P2 este ejecutandose por prioridad (asumiendo que no hay desalojo)
