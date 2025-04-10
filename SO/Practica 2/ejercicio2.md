@@ -1,4 +1,4 @@
-## Practica 2 Ejercicio 1
+## Practica 2 Ejercicio 2
 
 ### i) Es buena idea usar round-robin?
 ```
