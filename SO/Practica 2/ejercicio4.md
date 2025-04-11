@@ -36,8 +36,11 @@ asi que tarde o temprano se van a ejecutar todos.
 ### Colas de multinivel
 
 ```
-Puede resultar en starvation. Si por ejemplo hay n procesos en una cola de prioridad y un unico proceso en otra cola menor a esa: 
-si los n procesos van pasandose entre ellos el scheduler (por que antes de que se vacie la cola uno de ellos vuelva a estar ready) el scheduler nunca va a darle el CPU al proceso de la cola de inferior prioridad.
+Puede resultar en starvation. Si por ejemplo hay n procesos en una cola de prioridad 
+y un unico proceso en otra cola menor a esa: 
+si los n procesos van pasandose entre ellos el scheduler (por que antes de que se vacie la cola 
+uno de ellos vuelva a estar ready) 
+el scheduler nunca va a darle el CPU al proceso de la cola de inferior prioridad.
 ```
 
 ### Colas de multinivel  con feedback (aging)
