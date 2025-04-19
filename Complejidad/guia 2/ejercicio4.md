@@ -19,3 +19,24 @@ def verificar(n, cert):
 
 Corre en tiempo O(|cert|.polinomial) que es polinomial
 ```
+
+## b) GIRTH= {⟨G, k⟩ : G es un grafo tal que todos sus ciclos simples tienen k o menos vértices}
+```
+El complemento de un para todo es un existe negando la propiedad. Entonces el complemento de girth es:
+{<G,k> tq existe un ciclo simple con mas de k vertices}
+Veo que sea NP:
+Certificado: Camino de vertices de longitud > k que fomrman un ciclo. Tiene longitud O(nlogn) (n cantidad de nodos logn longitud de representacion) por lo que es polinomial.
+Verificador:
+Hay que recorrer la lista de nodos y verificar que forman un ciclo (ver que sean adyacentes en el grafo los nodos consecutivos en el certificado  y que el ultimo se adyacente al primero). Se verifica en O(|certificado|) que es  polinomial. 
+Por ultimo hay que chequear que la longitud del certificado sea mayor a k y que no haya nodos repetidos (sino podria ir y venir de un nodo a otro y que cualquier ciclo sea de cualquier longitud repitiendo nodos en el certificado)
+```
+
+## c) TAUTOLOGY= {⟨ϕ⟩ : ϕ es tautología}
+```
+El complemento es que exista una valuacion que haga la formula falsa.
+Veo que sea NP:
+Certificado: Una valuacion que al evaluarla en ϕ de falso. Su longitud es polinomial respecto a ϕ, 
+pues si ϕ tiene n varibles distintas el certificado tendra longitud n.
+Verificador:
+Recorre el certificado (es O(|certificado|)),  reemplaza cada una de las variables en ϕ, evalua ϕ y verifica que sea falsa (polinomial respecto de ϕ) 
+```
