@@ -10,3 +10,6 @@ $$x \in \Pi \iff x \in \Pi^{c}$$
 Abs!
 
 (No entendi la moraleja del ejercicio consultar)
+
+
+\newpage

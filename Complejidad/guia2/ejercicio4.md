@@ -2,7 +2,7 @@
 
 ### a) PRIME= {n : n $\in$ N es primo}
 
-```
+```py
 PRIME esta en coNP si solo si PRIME complemento esta en NP.
 El complemento es el lenguaje de los numeros naturales que no son primos.
 Veo que este en NP:
@@ -39,3 +39,5 @@ Certificado: Una valuacion que al evaluarla en $\phi$ de falso. Su longitud es p
 pues si $\phi$ tiene n varibles distintas el certificado tendra longitud n.
 Verificador:
 Recorre el certificado (es O(|certificado|)),  reemplaza cada una de las variables en $\phi$, evalua $\phi$ y verifica que sea falsa (polinomial respecto de $\phi$) 
+
+\newpage

@@ -6,9 +6,9 @@ Certificado: Lista de los nodos que forman el camino hamiltoneano (camino que pa
 
 Es polinomial tiene tamaño O(|V|) o O(nlogn).
 
-```
-verificador(g,s,t,c):
-    por cada nodo en el certificado-1:
+```py
+def verificador(g,s,t,c):
+    for cada nodo en el certificado-1:
         if(g[c[i]][c[i+1]]) == 0:
             return false // si no son adyacentes los nodos que tienen que serlo
                          //  para armar el caminio da falso
@@ -17,4 +17,6 @@ verificador(g,s,t,c):
 
 Esto corre en O(|c|) que es polinomial
 
-##falta agregar...
+### falta agregar...
+
+\newpage

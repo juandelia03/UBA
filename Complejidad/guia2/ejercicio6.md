@@ -60,3 +60,6 @@ f(X):
     for e in x:
         res.agregar(e,1)
     return res
+
+
+\newpage

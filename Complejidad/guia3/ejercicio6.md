@@ -7,17 +7,18 @@ Para cada nodo n chequeo si G-n sigue teniendo clique de tamaño maximo. Si se m
 n es dispensable asi que lo saco del grafo. Cuando termine de recorrer solo quedan nodos "indispensables"
 que forman la clique asi que devuelvo los nodos restantes en el grafo.
 
-```
+```py
 def max_clique(g):
     tamaño = 0
     for i in range(|g.v|+1):
         if clique(g,i):
-            tamaño++
+            tamaño += 1
         else:
             break
 
     for nodo in g.v:
-        if(clique(g.sin_nodo(nodo),tamaño)): // si hay clique de tamaño maximo en el grafo sin n, saco a n
+        if(clique(g.sin_nodo(nodo),tamaño)):
+            // si hay clique de tamaño maximo en el grafo sin n, saco a n
             g.sacar_nodo(n)
     return g.v // retorno los que quedaron, es decir los que forman la clique
 ```
@@ -27,3 +28,4 @@ operación polinomial (clique).
 
 Despues Simplemente vuelvo a recorrer la lista y hago operaciones polinomiales.
 
+\newpage

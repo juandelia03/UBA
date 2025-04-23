@@ -59,3 +59,5 @@ Mas precisamente por la definicion de $H$:
 $|V(H)| = |\{(S,v): S \subseteq V(G) \}| = n . 2^n$
 
 Es exponencial respecto al tamaño de la entrada.
+
+\newpage

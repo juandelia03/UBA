@@ -34,3 +34,5 @@ Que al ser análogo tambien tiene longitud par.
 $<G,s,t,k> \in EVEN-PATH$
 
 Queda demostrado
+
+\newpage

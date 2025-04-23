@@ -2,8 +2,8 @@
 
 ### a) COPRIME = {⟨a, b⟩ : (a : b) = 1, es decir, a y b son coprimos}
 
-```
-coprimo(a,b){
+```py
+def coprimo(a,b){
     tmp = 0
     while b != 0:
         tmp = b
@@ -37,7 +37,8 @@ Algoritmo:
 
 ```
 1. DFS en G marfcando los nodos, si encuentro uno ya marcado devuelvo falso.
-2. Si termina el dfs, recorrer la lista de nodos y ver que esten todos marcados para devolver true, caso contrario falso.
+2. Si termina el dfs, recorrer la lista de nodos y ver que esten 
+todos marcados para devolver true, caso contrario falso.
 ```
 
 Complejidad:
@@ -48,3 +49,5 @@ Digamos |G| = |V|+|E| = nlogn+mlogm
 2 $\rightarrow O(nlogn)$ recorrer la lista de nodos
 
 Es polinomial
+
+\newpage

@@ -24,11 +24,11 @@ f(phi):
 
 Con esto en mente defino un algoritmo:
 
-```
+```py
 def asignacion(phi):
     if SAT(phi):
         asignacion = []
-        for i in range(|phi.variables|):
+        for i in range(len(phi.variables)):
             if SAT-R(phi,asignacion + [True],i+1):
                 asignacion.push(True)
             else:
@@ -44,3 +44,4 @@ Hace eso con todas hasta obtener una asignacion valida.
 El programa corre en tiempo polinomial, pues hace cantidad de variables iteraciones, que es polinomial
 respecto de $\phi$. En cada iteracion corre SAT-R que por hipótesis es polinomial.
 
+\newpage

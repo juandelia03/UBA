@@ -25,3 +25,4 @@ $\langle G,H_k\rangle \in SUBGRAPHISOMORPHISM \Rightarrow$ $G$ grafo y $H_k$ es 
 
 $\Rightarrow$ G tiene un subgrafo de tamaño k completo $\Rightarrow$ $\langle G,k\rangle \in CLIQUE$
 
+\newpage
