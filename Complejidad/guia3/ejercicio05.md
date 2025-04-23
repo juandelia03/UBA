@@ -13,14 +13,6 @@ Sigue perteneciendo a NP (y por hipótesis a P) ya que la unica diferencia es qu
 (valuacion tq la formula sea satisfactible) hay que chequear que las primeras k variables del certificado
 sean las mismas que las restricciones.
 
-Tambien se podria escribir reduccion para ver $\text{ SAT}(\phi) \leq_p \text{SAT-R}(\phi ,r,k)$:
-
-$$ \phi \in \text{SAT} \iff f(\phi) \in \text{SAT-R} $$
-
-```
-f(phi):
-    return < phi, [],0>
-```
 
 Con esto en mente defino un algoritmo:
 
