@@ -16,3 +16,5 @@ verificador(g,s,t,c):
 ```
 
 Esto corre en O(|c|) que es polinomial
+
+##falta agregar...
