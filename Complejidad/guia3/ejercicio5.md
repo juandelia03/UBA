@@ -1,4 +1,4 @@
-# Ejercicio 5 Suponiendo que P = NP, diseñar un algoritmo polinomial que dada una fórmula booleana ϕ encuentre una asignación que la satizfaga, si es que ϕ es satisfacible.
+## Ejercicio 5 Suponiendo que P = NP, diseñar un algoritmo polinomial que dada una fórmula booleana $\phi$ encuentre una asignación que la satizfaga, si es que $\phi$ es satisfacible.
 
 Por hipotesis SAT $\in$ P:
 
@@ -43,3 +43,4 @@ Hace eso con todas hasta obtener una asignacion valida.
 
 El programa corre en tiempo polinomial, pues hace cantidad de variables iteraciones, que es polinomial
 respecto de $\phi$. En cada iteracion corre SAT-R que por hipótesis es polinomial.
+

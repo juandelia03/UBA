@@ -1,14 +1,14 @@
-# Ejercicio 8
+## Ejercicio 8
 Considerar el siguiente lenguaje:
 CONNECTED = {⟨G, s, t⟩ : G es un digrafo y s y t dos nodos de G tales que hay un
 recorrido de s a t}
-Para un digrafo G, sea H el digrafo que tiene un vértice (S, v) para cada S ⊆ V (G) y cada
-v ∈ V (G), donde (S, v) → (R, w) es una arista de H si y solo si w $\notin$ S, R = S ∪ {w} y v → w es
+Para un digrafo G, sea H el digrafo que tiene un vértice (S, v) para cada S $\subseteq$ V (G) y cada
+v $\in$ V (G), donde (S, v) $\rightarrow$ (R, w) es una arista de H si y solo si w $\notin$ S, R = S $\cup$ {w} y v $\rightarrow$ w es
 una arista de G.
 
-## a) 
+### a) 
 
-Demostrar que ⟨G, s, t⟩ ∈ HAMPATH ⇐⇒ ⟨H,({s}, s),(V (G), t)⟩ ∈ CONNECTED.
+Demostrar que ⟨G, s, t⟩ $\in$ HAMPATH $\iff$ ⟨H,({s}, s),(V (G), t)⟩ $\in$ CONNECTED.
 
 $\Rightarrow$)
 Si hay Hamiltoneano en G de s a t hay un camino de forma:
@@ -48,7 +48,7 @@ $$\Rightarrow <G,s,t> \in HAMPATH$$
 
 __queda demostrado__
 
-## b)
+### b)
 Mostrar que la reducción de HAMPATH a CONNECTED implicada por el punto anterior
 __no__ es polinomial.
 
@@ -56,6 +56,6 @@ Se ve que no es polinomial porque las aristas del grafo H se forman a partir de 
 posibles en cada arista.
 Mas precisamente por la definicion de $H$:
 
-$|V(H)| = |\{(S,v): S \subseteq V(G) \}| = n . 2^n $
+$|V(H)| = |\{(S,v): S \subseteq V(G) \}| = n . 2^n$
 
 Es exponencial respecto al tamaño de la entrada.

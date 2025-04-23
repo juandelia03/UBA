@@ -1,6 +1,6 @@
-# Probar que los siguientes problemas están en coNP
+## Ejercicio 4 Probar que los siguientes problemas están en coNP
 
-## a) PRIME= {n : n ∈ N es primo}
+### a) PRIME= {n : n $\in$ N es primo}
 
 ```
 PRIME esta en coNP si solo si PRIME complemento esta en NP.
@@ -20,7 +20,7 @@ def verificar(n, cert):
 Corre en tiempo O(|cert|.polinomial) que es polinomial
 ```
 
-## b) GIRTH= {⟨G, k⟩ : G es un grafo tal que todos sus ciclos simples tienen k o menos vértices}
+### b) GIRTH= {⟨G, k⟩ : G es un grafo tal que todos sus ciclos simples tienen k o menos vértices}
 ```
 El complemento de un para todo es un existe negando la propiedad. Entonces el complemento de girth es:
 {<G,k> tq existe un ciclo simple con mas de k vertices}
@@ -31,12 +31,11 @@ Hay que recorrer la lista de nodos y verificar que forman un ciclo (ver que sean
 Por ultimo hay que chequear que la longitud del certificado sea mayor a k y que no haya nodos repetidos (sino podria ir y venir de un nodo a otro y que cualquier ciclo sea de cualquier longitud repitiendo nodos en el certificado)
 ```
 
-## c) TAUTOLOGY= {⟨ϕ⟩ : ϕ es tautología}
-```
+### c) TAUTOLOGY= {⟨$\phi$⟩ : $\phi$ es tautología}
+
 El complemento es que exista una valuacion que haga la formula falsa.
 Veo que sea NP:
-Certificado: Una valuacion que al evaluarla en ϕ de falso. Su longitud es polinomial respecto a ϕ, 
-pues si ϕ tiene n varibles distintas el certificado tendra longitud n.
+Certificado: Una valuacion que al evaluarla en $\phi$ de falso. Su longitud es polinomial respecto a $\phi$, 
+pues si $\phi$ tiene n varibles distintas el certificado tendra longitud n.
 Verificador:
-Recorre el certificado (es O(|certificado|)),  reemplaza cada una de las variables en ϕ, evalua ϕ y verifica que sea falsa (polinomial respecto de ϕ) 
-```
+Recorre el certificado (es O(|certificado|)),  reemplaza cada una de las variables en $\phi$, evalua $\phi$ y verifica que sea falsa (polinomial respecto de $\phi$) 

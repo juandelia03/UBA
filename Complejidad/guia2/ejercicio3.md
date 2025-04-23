@@ -1,6 +1,6 @@
-# Ejercicio 3 Probar que los siguientes lenguajes están en NP.
+## Ejercicio 3 Probar que los siguientes lenguajes están en NP.
 
-# HAMPATH = {⟨G, s, t⟩ : G es un grafo con dos nodos s y t tales que hay un camino hamiltoniando de s a t}
+### HAMPATH = {⟨G, s, t⟩ : G es un grafo con dos nodos s y t tales que hay un camino hamiltoniando de s a t}
 
 Certificado: Lista de los nodos que forman el camino hamiltoneano (camino que pasa por todos los nodos si repetir)
 

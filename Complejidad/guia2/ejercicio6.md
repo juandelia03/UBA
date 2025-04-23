@@ -1,10 +1,10 @@
-# Ejercicio 6
-## a
+## Ejercicio 6
+### a
 Dada una instancia ⟨X⟩ de 2-PARTITION, 
 se define la instancia ⟨R, r1, . . . , r|X|⟩ de RECTANGLE PACKING donde R tiene base P
-x∈X x/2 y altura 2, y ri es un rectángulo de
-base xi y altura 1, para cada 1 ≤ i ≤ |X|. 
-Demostrar que ⟨X⟩ ∈ 2-PARTITION ⇐⇒⟨R, r1, . . . , r|X|⟩ ∈ RECTANGLE PACKING.
+x $\in$ X x/2 y altura 2, y ri es un rectángulo de
+base xi y altura 1, para cada 1 $\leq$ i $\leq$ |X|. 
+Demostrar que ⟨X⟩ $\in$ 2-PARTITION $\iff$ ⟨R, r1, . . . , r|X|⟩ $\in$ RECTANGLE PACKING.
 
 Veo la ida $\rightarrow$:
 
@@ -14,11 +14,11 @@ Para que la instancia $\in$ RECTANGLE PACKING, los $r_i$ deben poder cubrir R. c
 $x_i$ el conjunto de las areas es $X$.
 Por hipotesis se que lo puedo dividir como: 
 
-$
+$$
 \sum_{x \in X_1}{x} = 
 \sum_{x \in X_2}{x} = 
 \sum_{x \in X}{x/2}
-$
+$$
 
 Asi que puedo dividir a todos los $r_i$ en dos rectangulos de altura 1 (los pongo todos uno al lado de otro). Y la suma de ambas es el area de R. Si pongo esos de rectangulos uno arriba de otro obtengo al R de altura 2 que cumple con area. 
 (Notar que la base de cada area es $\sum_{x \in X}{x/2}$)
@@ -40,10 +40,10 @@ Como parti a la mitad el triangulo cada subconjunto tiene elementos distintos $X
 Por lo mismo $X_1 \cup X_2 = X$
 
 
-## b
+### b
 te la debo
 
-# c
+### c
 Mostrar que las reducciones implicadas por los puntos anteriores son polinomiales en función
 de los tamaños de las entradas.
 

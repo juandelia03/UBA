@@ -1,4 +1,4 @@
-# Ejercicio 3: Probar que la clase P está cerrada por unión, intersección y complemento
+## Ejercicio 2: Probar que la clase P está cerrada por unión, intersección y complemento
 
 Tomo cualqueira $L_1, L_2 \in P$ y P1(x) P2(x) las maquinas que los reconocen en tiempo polinomial
 

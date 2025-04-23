@@ -26,3 +26,4 @@ Calcular el tamaño maximo es polinomial, por cada nodo del grafo que es polinom
 operación polinomial (clique).
 
 Despues Simplemente vuelvo a recorrer la lista y hago operaciones polinomiales.
+

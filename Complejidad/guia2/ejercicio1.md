@@ -1,6 +1,6 @@
-# Ejercicio 1 Probar que los siguientes lenguajes están en P
+## Ejercicio 1 Probar que los siguientes lenguajes están en P
 
-# a) COPRIME = {⟨a, b⟩ : (a : b) = 1, es decir, a y b son coprimos}
+### a) COPRIME = {⟨a, b⟩ : (a : b) = 1, es decir, a y b son coprimos}
 
 ```
 coprimo(a,b){
@@ -31,7 +31,7 @@ el rango de ese numero es exponencial respecto a su tamaño**.
 
 Es la idea que hay que usar en todos los incisos.
 
-# c) TREE = {⟨G⟩ : G es un grafo conexo sin ciclos}
+### c) TREE = {⟨G⟩ : G es un grafo conexo sin ciclos}
 
 Algoritmo:
 
