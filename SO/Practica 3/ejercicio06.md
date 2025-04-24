@@ -10,7 +10,7 @@ c. ¿Qué soporte requiere cada una de ellas del SO y del HW?
 
 ```c
 //varibale compartida
-count = atomic<int> counter;
+atomic<int> count;
 ```
 
 ```c
