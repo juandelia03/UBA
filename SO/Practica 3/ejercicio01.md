@@ -41,3 +41,5 @@ El output general seria:
 0 a ...a 1 a ... a 2 a ... a 3 a... a
 
 donde a ... a puede ser 0 a'es hasta infinitas.
+
+\newpage

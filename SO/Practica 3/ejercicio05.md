@@ -1,5 +1,5 @@
 ## Ejercicio 5
-Se tienen n procesos: P1, P2, · · · , Pn que ejecutan el siguiente código. Se espera que todos los
+Se tienen n procesos: P1, P2, ... , Pn que ejecutan el siguiente código. Se espera que todos los
 procesos terminen de ejecutar la función preparado() antes de que alguno de ellos llame a la función
 critica(). ¿Por qué la siguiente solución permite inanición? Modificar el código para arreglarlo.
 
@@ -41,3 +41,5 @@ barrera.signal()
 
 critica()
 ```
+
+\newpage

@@ -27,3 +27,5 @@ Puede haber race condition: Si un proceso hace x++ y antes de guardar en memoria
 si vuelve a ejecturse despues de varias escrituras en x va a guardar un valor viejo de x a la memoria.
 
 La solucion seria meter todo enla zona critica del mutex.
+
+\newpage

@@ -26,3 +26,5 @@ Asi que si, es una posibilidad (bastante alta) que haya starvation,
 la unica posibilidad  de que se ejecute P2 es que el scheduler desaloje a alguno antes de que llegue a 
 hacer su wait. 
 Este problema no lo tenemos si usamos una cola FIFO
+
+\newpage

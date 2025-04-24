@@ -30,3 +30,5 @@ P2 decrementa s y se pone a ejecutar el recurso del semaforo.
 que esperaba por el semaforo.
 
 Asi el recurso del semaforo esta asignado a P2 y P3
+
+\newpage

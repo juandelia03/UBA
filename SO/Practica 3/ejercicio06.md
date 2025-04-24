@@ -36,3 +36,5 @@ El uso de variables atomicas requiere del hardware instrucciones atomicas para q
 
 Los semaforos requieren su implementacion del SO para poder llevar el registro y despertar a los que estan esperando 
 y del hardware las instrucicones atomicas como wait y signal necesarias para implementarlos.
+
+\newpage
