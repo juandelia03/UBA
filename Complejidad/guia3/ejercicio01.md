@@ -1,6 +1,6 @@
-# Ejercicio 1 Determinar cuáles de las siguientes afirmaciones son verdaderas y cuáles falsas. Demostrar aquellas que son verdaderas y dar contraejemplos para aquellas que son falsas.
+## Ejercicio 1 Determinar cuáles de las siguientes afirmaciones son verdaderas y cuáles falsas. Demostrar aquellas que son verdaderas y dar contraejemplos para aquellas que son falsas.
 
-## a) P $\subseteq$ NP y P $\subseteq$ coNP
+### a) P $\subseteq$ NP y P $\subseteq$ coNP
 
 P $\subseteq$ NP ?
 
@@ -15,7 +15,7 @@ $\forall \Pi \in P \Rightarrow \Pi \in coNP \Rightarrow \Pi{c} \in NP$
 
 Que es verdadero porque $\Pi$ pertenece a NP y esta cerrado por ele complemento.
 
-## b) Si P=NP entonces coNP = NP
+### b) Si P=NP entonces coNP = NP
 
 veo primero $NP \subseteq coNP$:
 
@@ -39,15 +39,15 @@ $$\Rightarrow \Pi \in P \Rightarrow^{P=NP} \Pi \in NP$$
 Como queria ver.
 
 
-## c) Si P = NP, entonces todos los lenguajes pertenecen a P.
+### c) Si P = NP, entonces todos los lenguajes pertenecen a P.
 
 Falso, Halt (cualquier problema que no sea NP creo)
 
-## d) Si coNP = NP , SAT $\in$ coNP
+### d) Si coNP = NP , SAT $\in$ coNP
 
 Verdadero, basta con ver SAT $\in$ NP que vimos en clase que es verdad (dar certificado y maquina...).
 
-## e) Si coNP $\subseteq$ NP, entonces NP = coNP
+### e) Si coNP $\subseteq$ NP, entonces NP = coNP
 
 Para que sean iguales basta con ver NP $\subseteq$ coNP (la vuelta ya esta en la hipotesis):
 

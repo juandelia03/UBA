@@ -1,4 +1,4 @@
-## Ejercicio 10
+## Ejercicio 10 (consultar)
 
 Considerar los siguientes dos lenguajes:
 
@@ -24,3 +24,5 @@ Probar que $\text{UNARY-SUBSET-SUM} \in \text{P}$.
 ### c)
 Concluir que la codificación de los números afecta la complejidad de los problemas.  
 En general, si un problema sigue siendo NP-completo cuando los números de la entrada se representan en unario, entonces el problema se considera **fuertemente NP-completo**.
+
+\newpage

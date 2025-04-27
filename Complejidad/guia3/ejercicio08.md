@@ -1,4 +1,4 @@
-## Ejercicio 8 Considerar los siguientes dos lenguajes:
+## Ejercicio 8 Considerar los siguientes dos lenguajes (consultar): 
 
 **SHORTEST PATH (SP)**  
 
