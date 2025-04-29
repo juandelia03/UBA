@@ -16,3 +16,5 @@ completar
 
 ### c) Con reemplazo Second chance
 completar
+
+\newpage
