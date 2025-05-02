@@ -83,3 +83,5 @@ $$
 $$
 
 $nota_2$: G tiene clique con x menos nodos que en G' (x=n-2k).
+
+\newpage
