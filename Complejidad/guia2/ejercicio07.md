@@ -1,4 +1,4 @@
-# Ejercicio 7
+## Ejercicio 7
 Explicar por qué la identidad no es una reducción polinomial de un lenguaje $\Pi$ a $\Pi^{c}$.
 
 Concluir que las nociones de NP y coNP son altamente sensibles a la “etiqueta” de la respuesta.

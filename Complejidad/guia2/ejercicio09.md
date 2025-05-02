@@ -1,4 +1,4 @@
-# Ejercicio 9 (a consultar)
+## Ejercicio 9 (a consultar)
 
 Si x pertenece a L quiero que f(x) termine asi pertenece a halting,
 sino quiero que se cuelgue
