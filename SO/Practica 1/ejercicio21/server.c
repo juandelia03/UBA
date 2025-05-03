@@ -22,4 +22,6 @@ int main() {
     server_socket = socket(AF_UNIX, SOCK_STREAM, 0);
     bind(server_socket, (struct sockaddr *) &server_addr, slen);
     listen(server_socket, 1);
+
+    //falta pasarlo
 }

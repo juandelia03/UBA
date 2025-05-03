@@ -5,9 +5,19 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <signal.h>
+
+
+int server_socket;
+int pid_hijo;
+void int_handler(int signal){
+    close(server_socket);
+    kill(pid_hijo,SIGKILL);
+    wait(NULL);
+    exit(EXIT_SUCCESS);
+}
 
 int main() {
-    int server_socket;
     struct sockaddr_un server_addr;
 
     server_addr.sun_family = AF_UNIX;
@@ -19,4 +29,24 @@ int main() {
         exit(1);
     }
 
+    signal(SIGINT,int_handler);
+    pid_hijo =fork();
+    if(pid_hijo == 0){ //proceso que escucha mensajes
+        int mensaje;
+        while(read(server_socket,&mensaje,sizeof(mensaje))){
+            printf("recibio el mensaje %d\n",mensaje);
+        }
+    }    
+    while(1){
+        int envio;
+        printf("enviar mensaje: ");
+        scanf("%d",&envio);
+        int b = write(server_socket,&envio,sizeof(envio));
+        if(b == 0){
+            break;
+        }
+    }
+    close(server_socket);
+    wait();
+    exit(EXIT_SUCCESS);
 }
