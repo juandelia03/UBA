@@ -47,6 +47,7 @@ int main() {
         }
     }
     close(server_socket);
-    wait();
+    kill(pid_hijo,SIGKILL);
+    wait(NULL);
     exit(EXIT_SUCCESS);
 }
