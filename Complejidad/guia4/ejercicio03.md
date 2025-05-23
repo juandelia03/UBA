@@ -3,3 +3,5 @@
 $$\Pi_{pad} = \{\langle x,01^{2^{|x|^{c}}}\rangle : x \in \Pi \}$$
 
 Esta la demostracion en el apunte de Santi en la pagina 36.
+
+\newpage

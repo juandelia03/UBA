@@ -12,3 +12,5 @@ Para ele ejemplo voy a aprovechar que se que halt no es computable:
 
 - $f(n) = n^2$ Si la n-esima maquina con entrada n termina
 - $f(n) = 2n$ Caso contrario
+
+\newpage

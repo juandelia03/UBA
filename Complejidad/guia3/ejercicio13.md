@@ -44,6 +44,8 @@ $$
 
 Propongo la siguiente funcion:
 
+**CORREGIR LA VUELTA NO ANDA FALTA EL CASO ELSE AGREGANDO NODOS SUELTOS**
+
 ```py
 f(G,k):
     if k < len(G.v):
