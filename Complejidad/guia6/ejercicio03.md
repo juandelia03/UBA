@@ -22,3 +22,5 @@ Si para algun k $\Sigma_{k}^{p} = \Pi_{k}^{p}$ entonces PH = $\Sigma_{k}^{p}$
 Tomando k=1:
 
 $$\Sigma_{1}^{p} = NP = coNP = \Pi_{1}^{p} \Rightarrow PH = NP$$
+
+\newpage

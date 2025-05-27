@@ -7,4 +7,4 @@ Es decir, que una formula sea mas chica que k implica que para alguna valuacion 
 $M(\langle \phi, k, v, \phi' \rangle)$ Corre en timepo polinomial, solo tiene que evaluar ambas formulas en v y ver que sean distintas y chequear que la
 longitud de $\phi' \leq k$
 
-
+\newpage
