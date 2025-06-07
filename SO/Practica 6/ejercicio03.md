@@ -36,3 +36,31 @@ $2^{9}.2^{9} = 2^{18}$ (cantidad de LBA's multiplicado por cuantos bloques apunt
 $\Rightarrow$ 1048576 Kib
 
 **suma total: 20 Kib + 4096 Kib + 1048576 Kib = 1052692 Kib**
+
+### b)
+
+El 50% que tiene archivos de 2 Kib, por cada archivo usa solo medio bloque asi que desperdicia la mitad del espacio. Es decir desperdicia la mitad de 50% $\Rightarrow$ 25%
+
+Los archivos que ocupan 4 Kib y 8 Kib utilizan exactamente uno o dos bloques respectivamente, es decir que no desperdician espacio.
+
+**Espacio desperdiciado total: 25%**
+
+### c) 
+
+Primero calculo cuantos bloques de datos requiere el archivo:
+
+$\frac{5Mib}{4Kib} = 1280$ Bloques
+
+Veamos a cuantos bloques tengo que acceder (tener en cuenta las cuentas de a) )
+
+Con los directos me consigo 5 bloques en 5 accesos al disco.
+
+Si me traigo del disco el primer bloque indirecto tengo acceso a 512 LBA's de bloques de datos. Como tengo 2 indirectos me traigo dos bloques.
+En total me quedan 2 accesos de traerme los bloques de LBA's + 1024 accesos de efectivamente traerme los bloques de datos.
+
+Todavia no me alcanza, me faltan 251 bloques de datos mas (me faltaria un bloque indirecto mas)
+
+Me traigo el bloque doblemente indirecto, de ahi me traigo el primer bloque indirecto y con ese me puedo traer los 251 bloques de datos.
+En total me quedan 1 (bloque d.i) + 1 (bloque indirecto) + 251 (traerme los bloques de datos).
+
+**Bloques accedidos: 5 + 2 + 1024 + 1 + 1 + 251 = 1284 Bloques**
