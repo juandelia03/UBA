@@ -9,7 +9,7 @@ Dado un L $\in$ P/Poly quiero ver que L $\in P_{advice}$
 Como L esta en P/poly hay $C_n$ para todo n tq: $x \in L \iff x \in C_n$ con $|x| = n$
 
 Para que este en $P_{advice}$ tiene que existir un adv(n) de tamaño polinomial tq: 
-$M(x,adv(|x|)) = 1 \iff $ (el consejo solo depende del tamaño de x).
+$M(x,adv(|x|)) = 1 \iff $  x \in L (el consejo solo depende del tamaño de x).
 
 Elijo adv(n) = $C_n$ (que existe por hipotesis).
 
