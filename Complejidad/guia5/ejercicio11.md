@@ -29,7 +29,7 @@ f va a tomar una instancia de $PATH$ y la va a devolver un $G'$ de la siguiente 
 - Ademas va a tener las aristas $t \rightarrow t_{out}$ y $s_{in} \rightarrow s$
 - Para todo nodo v del grafo se van a agregar las aristas $t_{out} \rightarrow v$ y $v \rightarrow s_{in}$ 
 
-Con esta reduccion cualquier nodo se va a poder "meter" al camino por $s_in$ y a la salida del camino puede ir
+Con esta reduccion cualquier nodo se va a poder "meter" al camino por $s_{in}$ y a la salida del camino puede ir
 a cualquier otro por $t_{out}$ (solo si hay camino de s a t, sino llega a t cuando entra a s no puede ir a cualquier otro)
 
 Construir este grafo es computable implicitamente en L, es copiar el grafo y agregar cosas no usamos nada en la cinta de trabajo.
@@ -60,7 +60,7 @@ $$\text{NFA-NO-VACIO} = \{ \langle A \rangle : \text{A es un automata no determi
 
 **Verfificador**: Ir "caminando" el automata (lo pienso como un grafo, la unica diferencia es que 
 hay un inicial, estado finales y transiciones. Recorrerlo es igual). Para caminarlo leo una unica vez el certificado 
-avanzandoi un nodo "actual" al siguiente que indique el certificado. Verificando que existan las aristas que los conectan, 
+avanzando un nodo "actual" al siguiente que indique el certificado. Verificando que existan las aristas que los conectan, 
 que el nodo inicial sea $q_0$ y que el ultimo sea algun estado final.
 Esto ocupa espacio log, solo guardo el nodo que pivotea.
 
