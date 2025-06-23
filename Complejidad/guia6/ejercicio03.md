@@ -1,17 +1,17 @@
-## Ejercicio 3 Probar que si  SAT $\leq_P$ $\lnot$ SAT entonces PH = NP
+## Ejercicio 3 Probar que si  SAT $\leq_P$ $\overline{SAT}$ entonces PH = NP
 
 Por hipotesis puedo decir que $NP \subseteq coNP$, pues cualquier problema de NP seria
 menor o igual de dificil que uno de coNP.
 
-Ademas la reduccion lo que me dice es $\phi \in SAT \iff f(\phi) \in \lnot SAT$
+Veamos que $coNP \subseteq NP$:
 
-Que es lo mismo (por como es SAT) que $\lnot \phi \in \lnot SAT \iff \lnot f(\phi) \in SAT$
+Sea $L \in coNP \Rightarrow \overline{L} \in NP$
 
-Es decir: 
+Como por hipotesis $NP \subseteq coNP$:
 
-$$\lnot SAT \leq_p SAT$$
+$\overline{L} \in NP \Rightarrow \overline{L} \in coNP \Rightarrow L \in NP$
 
-Que al igual que antes implica que (not SAT es coNP completo) $coNP \subseteq NP$
+queda demostrado que $coNP \subseteq NP$
 
 Por lo tanto coNP = NP
 

@@ -2,10 +2,13 @@
 
 Recordar que PH es la union de todo $\Sigma_{k}^{p}$
   
-Probar esto es probar que toda la jerarquia colapsa en ese k. Porque $\Sigma_{i \leq k} \subseteq \Sigma_k$, como todos 
-los mas chicos ya sabemos que estan en $\Sigma_k$ basta con ver que los mas grande tambien.
+Probar esto es probar que toda la jerarquia colapsa en ese k. 
+Esta claro que $\Sigma_{i \leq k} \subseteq \Sigma_k$. 
 
-Veamos por induccion que $\Sigma_{k}^{p} = \Sigma_{k+n}^{p}$
+Lo dificil es ver que $\Sigma_{i \geq k} \subseteq \Sigma_k$
+
+Veamos por induccion usando la hipotesis, que $\Sigma_{k}^{p} = \Sigma_{k+n}^{p}$, 
+Para poder concluir PH = $\Sigma^{p}_{k}$ 
 
 **CB, n=0**
 
@@ -23,7 +26,7 @@ Reemplazando la izquierda del igual por la *HI*  es lo mismo que ver:
 
 $\Sigma_{k+n}^{p} = \Sigma_{k+n+1}^{p}$
 
-Ya sabemos que vale $\Sigma_{k+n}^{p} \subseteq \Sigma_{k+n+1}^{p}$
+Ya sabemos que vale $\Sigma_{k+n}^{p} \subseteq \Sigma_{k+n+1}^{p}$ (es la inclusion trivial)
 
 Veamos la otra contencion, tomo L $\in \Sigma_{k+n+1}^{p}$:
 
