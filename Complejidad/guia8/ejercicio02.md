@@ -19,3 +19,5 @@ Que es falso pues es una exponencial contra un polinomio. de hecho:
 $$k.p(n).log(p(n)) << 2^{n}$$
 
 Por lo tanto existen lenguajes fuera de P/poly
+
+\newpage

@@ -16,3 +16,5 @@ Podemos pensar al circuito como un camino de las varibles al sumidero (DAG). Hay
 para eso hacemos DFS sobre el circuito. Como tiene altura logaritmica y DFS solo guarda de a una rama en memoria, 
 se puede hacer con espacio logaritmico. 
 De esta manera recorre todas las posibilidades recursivamente y decide $\Pi$
+
+\newpage

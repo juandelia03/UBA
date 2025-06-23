@@ -23,3 +23,5 @@ rechazar si esta  o no, esto se puede hacer con compuertas and y or. Vemos que c
 
 Se ve que $C_n(x) = 1 \iff x \in L$
 Ademas este circuito tiene tamaño polinomial (p(n).n), porque tiene P(n) palabras de longitud n. 
+
+\newpage

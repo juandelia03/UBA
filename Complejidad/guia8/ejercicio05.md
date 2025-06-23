@@ -24,3 +24,5 @@ que:
 2. Corre la maquina M ($$M(x,adv(|x|)) = 1 \iff x \in SAT$$) con cada consejo. Esta maquina
 corre en tiempo polinomial |a| veces (que a su vez es polinomial).
 3. Si alguna simulacion dio 1 significa que existe formula que satisface asi que devuelve 1, caso contrario devuelve 0
+
+\newpage

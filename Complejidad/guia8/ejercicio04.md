@@ -10,3 +10,4 @@ $codificacion(x)_i$ = 1}
 Este lenguaje no pertenece a P porque ir a leer el bit puede ser exponencial. Pertenece a P/1 si usamos como consejo el valor 
 de ese bit.
 
+\newpage

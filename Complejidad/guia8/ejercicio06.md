@@ -7,3 +7,5 @@ Veamos por el absurdo que P = NP,
 valdria: $NP = P \subseteq P/poly$
 
 Esto es absurdo por hipotesis, NP no esta contenido en P/poly, entonces $P \neq NP$
+
+\newpage
