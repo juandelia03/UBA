@@ -18,10 +18,10 @@ Ademas como los consejos son de tamaño $O(log(n))$ podria tenerlos todos en una
 
 Es decir que tiene tamaño polinomial. 
 
-La idea va a ser entonces probar todos los consejos, podria definir la maquina $M_sat(x)$
+La idea va a ser entonces probar todos los consejos, podria definir la maquina $M_{sat}(x)$
 que:
 1. genera todos los consejos, esto es polinomial por lo que explique antes.
-2. Corre la maquina M ($$M(x,adv(|x|)) = 1 \iff x \in SAT$$) con cada consejo. Esta maquina
+2. Corre la maquina M ($M(x,adv(|x|)) = 1 \iff x \in SAT$) con cada consejo. Esta maquina
 corre en tiempo polinomial |a| veces (que a su vez es polinomial).
 3. Si alguna simulacion dio 1 significa que existe formula que satisface asi que devuelve 1, caso contrario devuelve 0
 

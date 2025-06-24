@@ -1,4 +1,4 @@
-## Ejercicio 15 Probar que NC $subsetneq$ PSPACE. Ayuda: probar que $NC^k \subseteq SPACE(log^k n)$
+## Ejercicio 15 Probar que NC $\subsetneq$ PSPACE. Ayuda: probar que $NC^k \subseteq SPACE(log^k n)$
 
 Algunas aclaraciones antes de empezar:
 
