@@ -19,7 +19,7 @@ Primero:
 $$\Pi = \{\langle \phi,v \rangle \exists v'. v >  v' \land \phi(v') = 1\}$$
 
 (> chequeando lexicograficamente)
-Basicamente dada una v verdadera dice si existe una menor. Se ve que es NP es solo un existe con cosas polinomiales $\Sigma_1^{P} = NP$ o tambien es facil dar un certificado (una valuacion mas chica que hace la verdadera a la formula)
+Basicamente dada una v  dice si existe una menor que la satisface. Se ve que es NP es solo un existe con cosas polinomiales $\Sigma_1^{P} = NP$ o tambien es facil dar un certificado (una valuacion mas chica que hace la verdadera a la formula)
 
 Algoritmo:
 
@@ -27,11 +27,10 @@ Algoritmo:
 M(x,i):
     res = 0
     busqueda bianaria de todas las valuaciones v de x:
-        vamos a buscar a la formula satisfacible mas chica, cada
-        vez que encontramos una mas chica chequeamos con el oraculo si
-        existe otra mas chica satisfacible. Cuando ya no haya otra mas chica
-        terminamos de buscar y la guardamos en res
-
+        arrancamos "en el medio" y chequeamos si hay una mas chica
+        que haga satisfacible a la formula y vamos haciendo busqueda binaria
+        hasta encontrar la mas chica que satisface.
+    //chequear que el bit i es 1
     if res[i] == 1:
         return 1
     else:
