@@ -39,3 +39,5 @@ M(x,i):
 
 Justificacion polinomial, en la busqueda binaria. Hay $2^{|x|}$ valuaciones posibles, como hacemos Binary search son $log(2^{x})$ 
 iteraciones, es decir es $O(|x|)$
+
+\newpage

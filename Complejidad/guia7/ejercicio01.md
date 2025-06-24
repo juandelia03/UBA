@@ -24,3 +24,5 @@ Quiero ver que todo $\Pi \in E^A$.
 
 Sabemos que podemos simular cualquier maquina no deterministica simulandola deterministicamente en tiempo exponencial.
 (y como ambos tienen acceso al mismo oraculo lo llaman y listo)
+
+\newpage

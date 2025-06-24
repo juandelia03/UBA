@@ -32,3 +32,5 @@ Tambien podemos decir que $\overline{\Pi} \in NP^{\Pi}$. Se puede decidir al com
 dada cualquier entrada.
 
 $\overline{\Pi} \in NP^{\Pi} \Rightarrow \overline{\Pi} \in NP \Rightarrow \Pi \in coNP$
+
+\newpage

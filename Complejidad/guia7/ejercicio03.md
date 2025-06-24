@@ -22,3 +22,5 @@ Si $\Pi \in coNP \Rightarrow \overline{\Pi} \in NP$. Y ademas $x \in \Pi \iff x 
 La maquina oracular con entrada x puede reconocer a $\Pi$ de la siguiente manera:
 1. Le pregunta al oraculo $x \in \overline{\Pi}$ esto lo hace en O(1) porque $\overline{\Pi} \in NP$
 2. devuelve la respuesta del oraculo negada, pues $x \in \Pi \iff x \not\in \overline{\Pi}$
+
+\newpage

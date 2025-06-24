@@ -22,3 +22,4 @@ sigue siendo PSPACE.
 Podemos simular cualquier maquina de $PSPACE^{PSPACE}$ con una maquina PSPACE sin oraculo.
 En conclusion $PSPACE^{PSPACE} = PSPACE$ 
 
+\newpage

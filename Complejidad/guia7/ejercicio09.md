@@ -22,3 +22,5 @@ Entonces $\Pi \in 2E$ se puede resolver en $E^E$ con entrada x como:
 De esta manera podemos simular cualquier lenguaje de 2E con una maquina $E^E \Rightarrow 2E \subseteq E^E$ 
 
 Finalmente $E \subsetneq E^E \Rightarrow E \neq E^E$
+
+\newpage
