@@ -1,0 +1,3 @@
+Ejercicio 2.1. Sea L el lenguaje de las cadenas de $\{a, b\}^*$ que no contienen las subcadenas a b a ni b a a. Determinar si $\mathrm{Fin}(L)$ es un lenguaje regular. En caso afirmativo, dar un autómata finito que lo reconozca, indicando si es determinístico. En caso contrario, demostrarlo.
+
+Ejercicio 2.2. Sea L el lenguaje denotado por la expresión regular $(a(ab)^*)^*$. Dar una expresión regular para $L^c$ (tomando el complemento sobre el alfabeto $\{a, b\}$).

@@ -9,14 +9,14 @@ por una maquina no determinista que corre en tiempo polinomial sin oraculo.
 
 Notemos que si $\Pi \in NP \cap coNP \Rightarrow \Pi \in NP \land \overline{\Pi} \in NP$ 
 
-Es decir existe un certificado c y un verificador $V_1$ tq $V_1$(x) = 1 $\iff$ $x \in \Pi$
+Es decir existe un certificado c y un verificador $V_1$ tq $V_1$(xc) = 1 $\iff$ $x \in \Pi$
 
 y 
 
-existe un certificado c y un verificador $V_2$ tq $V_2$(x) = 1 $\iff$ $x \in \overline{\Pi} \iff x \not\in \Pi$
+existe un certificado c y un verificador $V_2$ tq $V_2$(xc) = 1 $\iff$ $x \in \overline{\Pi} \iff x \not\in \Pi$
 
 Puedo simular los llamados de la maquina con oraculo sin usar oraculos con entrada x de la siguiente manera:
-
+```
 Simulo Maquina oracular:
     si hay una consulta al oraculo:
         adivina r respuesta del oraculo (1 o 0)
@@ -26,7 +26,7 @@ Simulo Maquina oracular:
         si r = 0 (analogo):
             adivinar un certificado C
             si V_2(xc) rechaza, rechazar (para que **no** pertenezca tiene que existir un cert para V_2)
-
+```
 
 Esto es una maquina no determinista polinomial.
 
