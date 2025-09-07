@@ -272,7 +272,27 @@ calculate the number of elements needed to find a collision with at least 50\%.
     No es una buena idea, desarrollo respecto a las propiedades que debe cumplir una funcion de hash para ser segura:
 
     \begin{enumerate}
-        \item 
+        \item \textbf{Resistencia a colisiones:} 
+        Tenemos que garantizar que sea dificil hallar x,x' tal que: H(x) = H(x').
+        Con este esta implementacion sea x cualquier string de longitud mayor a n y H(x) = h (h tiene longitud n). Obtener
+        x' con el mismo hash es tan sencillo como elegir el string h, pues H(h) = h. Entonces esta funcion de hash no cumple
+        con la propiedad de ser resistente a colisiones.
+
+        \item \textbf{Resistencia a la Pre-Imagen}:
+        La funcion deberia garantizar que dado y = H(x), para un x cualquiera sea dificil encontrar x' tal que H(x') = y.
+        En este caso tambien tenemos problemas si y es un hash cualquiera, hallar x' tal que H(x') = y
+        es tan sencillo como elegir el string y (como es el resultado de una funcion de hash su longitud es n). 
+        Por como esta definida la funcion va a valer que
+        H(y) = y
+
+        \item \textbf{Resistencia a la segunda pre-imagen:} 
+
+        Por lo mismo que explique en el primer punto tampoco es resistente a la segunda pre-imagen, dado un cualquier x 
+        de longitud mayor a n, H(x) = h y $|h|$ =  n. Podemos hallar x' que compla H(x) = H(x') tomando simplemente  x' = h.
+        
+
+        Se pierden caracteristicas escenciales como que la funcion sea one way, "random" y que cuando cambiamos muy poco
+        el contenido a hashear este cambie de manera impredecible.
     \end{enumerate}
 \end{solution}
 
