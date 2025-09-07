@@ -310,9 +310,14 @@ Show an attack on the plain RSA signature scheme we saw in class in which an att
 
 \question[10] A Bitcoin miner creates a block $B$ which contains address $\alpha$, on which it wants to receive its rewards. An attacker changes the contents of $B$, such that instead of $\alpha$ it defines a new address $\alpha'$, which is controlled by the attacker. Will the attacker receive the rewards that the miner tries to claim? Why or why not? Give a detailed explanation of your answer.
 
-%\begin{solution} %Uncomment and type your solution here
-    
-%\end{solution}
+\begin{solution} %Uncomment and type your solution here
+
+    No, el atacante no va a recibir las recompensas. Si el atacante cambia el contenido del bloque, este va a dejar
+    de ser congruente con la cadena ya que el hash depende de su contenido por lo que no va a haber consenso. 
+    Para eso esta proof of work, si el atacante quiere cambiar un bloque necesita consenso y para eso tendria que hacer
+    la proof of work.
+
+\end{solution}
 
 \newpage
 
@@ -379,17 +384,49 @@ contract Bank {
  
  \part[5] Describe the contract’s functionality (that is, the purpose of each variable, function, and event).
  
-%\begin{solution} %Uncomment and type your solution here
+\begin{solution} 
+
+    El contrato modela el comportamiento de un banco.
+
+    La primera variable balance es un mapping (se puede pansar como un diccionario key/value) que mapea direcciones (address) a 
+    numeros positivos (su balance). Basicamente guarda el balance de cada cliente.
+
+    Customers es un arreglo de addresses, contiene a los clientes del banco.
+
+    Luego define dos eventos, Deposit y Withdrawal. Estos los podemos emitir, avisando que un cliente deposito o retiro balance
+    del banco. Los event no modifican el estado del contrato pero si quedan registrados en la blockchain.
+
+    La funcion deposit requiere que la cantidad de eth de quien la llama sea mayor a 10. 
+    Luego le suma a su balance ese valor restandole 10 (imagino que es una especie de comision). 
+    Despues agrega al cliente a la lista de clientes y por ultimo emite el evento
+    deposit, indicandoque ese cliente envio ese mensaje. Notar que la funcion es payable por eso quien la llama puede gastar eth.
     
-%\end{solution}
+    La funcion withdraw se guarda en una variable local el balance de quien la llamo. Setea su balance en el map del 
+    contrato como cero y luego le transfiere los eth correspondientes.
+    Por ultimo emite el evento Withdrawal indicando que es cliente realizo un retiro.
+
+    La funcion getBalance simplemente devuelve el balance que esta guardado en el map de quien llamo a la funcion. Es view
+    porque no modifica el estado del contrato simplemente lee variables.
+
+    La funcion empty requiere que quien la llama sea el customer que esta en la possicion inicial del array de customers.
+    Le transfiere todo el balance del contrato (el balance de la address no del map) a quien llamo a la funcion.
+
+
+\end{solution}
+
 
 \part[15]
  
  Provide the id of the transaction you performed and the address you used.
  
- %\begin{solution} %Uncomment and type your solution here
-    
-%\end{solution}
+    \begin{solution} 
+
+        Mi address es: 0x65De8AcFCC18B4D182857Cf19c687AF735Ffc9CD
+        
+        id de transaccion:
+        
+        0x306edc7f4205d6a3d470b8ae5931ee31ebd48ada820509360dea5fa234829f65
+    \end{solution}
 
 \end{parts}
 
