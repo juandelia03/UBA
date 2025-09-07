@@ -141,7 +141,8 @@ for a total of \numpoints \ points.
         $H(H(H(D_1) || H(D_2)) || H(H(D_3) || H(D_4)))$
 
         La función de Hash es fundamental para asegurar que si se cambia cualquier contenido, 
-        la raíz del árbol va a ser radicalmene distinta. 
+        la raíz del árbol va a ser radicalmene distinta 
+        (gracias a la resistencia a la colision y a la preimagen de la funcion de hash). 
     \end{solution}
 
     \part[3] Describe how a (complete, binary) MT is constructed for the following five chunks of data: ABC, DEF, GHI, KLM, OPQ.
@@ -192,15 +193,73 @@ for a total of \numpoints \ points.
 \part[5] Derive the formula for the {\em birthday paradox} we saw in class (show your work, explaining every step) and
 calculate the number of elements needed to find a collision with at least 50\%. 
 
-%\begin{solution} %Uncomment and type your solution here
+\begin{solution} 
+
+    Para este ejercicio me guié usando las diapositivas de la clase dos donde vimos la paradoja del cumpleaños.
+
+    La idea es encontrar cuántas personas son necesarias para que haya al menos 50 porciento de probabilidad de 
+    que 2 personas (distintas) cumplan el mismo dia. 
     
-%\end{solution}
+    Llamemos A al evento en que dos personas cumplen el mismo dia. 
+    Como es mas sencillo calcular la probabilidad de que no haya dos personas que cumplan el mismo dia, 
+    notemos $P(B) = P(\lnot A)$, calculemos P(B). Luego, por complemento,  P(A) = 1 - P(B).
+
+    Sea n la cantidad de todas las posibles fechas y k la cantidad de personas:
+
+
+    La probabilidad de B es casos favorables sobre casos posibles:
+
+    $\textbf{Analizando casos posibles}$:
+
+    Si hay n dias, cada persona tiene para n opciones para cumplir años. Como hay k personas y 
+    cada opcion es independiente entonces hay $n^k$ posibilidades.
+
+    $\textbf{Analizando casos favorables}$:
+    
+    Aca hay que tomar las todas las posibilidades donde no se repiten dias. La primer pesrsona tiene n dias posibles, 
+    para que no se repitan la segunda tiene n-1 dias posibles,..., la k-esima tiene n-k+1 dias posibles. Es decir:
+
+    $n \times (n-1) \times ... \times (n-k+1)$
+    
+
+    $\textbf{Probabilidad de B}$:
+
+
+    $P(B) = \frac{n \times (n-1) \times ... \times (n-k+1)}{n^k}$
+
+
+    $= \prod^{k-1}_{l=1}(\frac{n-l}{n}) = \prod^{k-1}_{l=1}(1 - \frac{l}{n})$ ordeno como productoria
+
+
+    $\leq exp(-\frac{1}{n} \sum^{k-1}_{l=1} l)$ 
+
+    $= exp(\frac{-k(k-1)}{2n})$
+
+    Para que haya al menos 50\% de probabilidad de que haya una colision necesito $P(B) \leq 0.5$:
+
+    $P(B) \leq \frac{1}{2}$
+
+    $\frac{-k(k-1)}{2n} \leq ln(\frac{1}{2})$ (tomando logaritmo natural de ambos lados)
+    
+    $k^2 - k \geq 2n ln(2)$
+
+    Usando la resolvente (es una cuadratica) hallamos k:
+
+    $k \geq \frac{1 + \sqrt{1 + 8n ln2}}{2}$
+    
+\end{solution}  
 
 \part[5] Apply the above result to find out how many Bitcoin users are needed to initialize their wallet’s seed, which is based on a random selection of 12 random words from the list in \url{https://github.com/bitcoin/bips/blob/master/bip-0039/english.txt}, to have the event that, with probability at least 50\%, at least two users end up with exactly the same seed.
 
-%\begin{solution} %Uncomment and type your solution here
+\begin{solution} 
+
+    En este caso n va a ser la cantidad de seeds que se pueden formar. Hay 2048 palabras en la lista y cada seed 
+    se conforma de 12 palabras, es decir que hay $2048^{12}$ seeds distintas (entendiendo que importa el orden de las palabras
+    y pueden repetirse en una misma seed).
+
+    Dicho esto se necesitarian k usuarios con $k = \frac{1+\sqrt{1+8 \times 2048^{12} ln 2}}{2}$
     
-%\end{solution}
+\end{solution}
 
 \end{parts}
 
@@ -208,9 +267,14 @@ calculate the number of elements needed to find a collision with at least 50\%.
 
 \question[10] Prof. Gray has designed a cryptographic hash function $H_G : \{0, 1\}^\ast \rightarrow \{0, 1\}^n$. One of his brilliant ideas is to make $H_G(x) = x$ if $x$ is an $n$-bit string (assume the behavior of $H_G$ is much more complicated on inputs of other lengths). That way, we know with certainty that there are no collisions among $n$-bit strings. Has Prof. Gray made a good design decision? Justify your answer, in particular listing the properties that may or may not be satisfied by the design.
 
-%\begin{solution} %Uncomment and type your solution here
-    
-%\end{solution}
+\begin{solution} 
+
+    No es una buena idea, desarrollo respecto a las propiedades que debe cumplir una funcion de hash para ser segura:
+
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+\end{solution}
 
 \newpage
 
