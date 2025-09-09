@@ -302,9 +302,39 @@ calculate the number of elements needed to find a collision with at least 50\%.
 
 Show an attack on the plain RSA signature scheme we saw in class in which an attacker forges a signature on an arbitrary message $m$ by asking the signer to sign two other different messages (not necessarily unrelated to $m$).
 
-%\begin{solution} %Uncomment and type your solution here
+\begin{solution} %Uncomment and type your solution here
+
+    Leí el siguiente artículo para este punto: 
     
-%\end{solution}
+    https://www.geeksforgeeks.org/computer-networks/rsa-and-digital-signatures/
+
+    Si un atacante obtiene dos firmas de dos mensajes, es capaz de firmar un m arbitrario.
+
+    Sean los mensajes $m_1, m_2$ sus firmas son:
+    
+    $s_1= m_1^d$ mod N  y  
+    
+    $s_2 = m_2^d$ mod N
+
+    respectivamente.
+
+    Para verificar una firma hay que chequear si $s^e$ mod N $= m$
+
+    (Ya que $(m^d)^e$ mod N = m)
+
+    El atacante puede firmar $m = m_1 m_2$ ya que su firma es directamente $s = s_1 s_2$ mod N.
+
+
+    Veamos que se verifica la firma:
+
+    $s^e \text{ mod N } = 
+    (s_1 s_2)^e \text{ mod N } = 
+    (m_1^d m_2^d)^e \text{ mod N } = 
+    (m_1 m_2)^{d e} \text{ mod N } = \\
+    m^{de} \text{ mod N }
+    = (m^d)^e \text{ mod N } = 
+    m$
+\end{solution}
 
 \newpage
 
@@ -325,9 +355,59 @@ Show an attack on the plain RSA signature scheme we saw in class in which an att
 to a Public Testnet” document shared on Campus, as well as the Solidity
 tutorial material and pointers.) 
 
-%\begin{solution} %Uncomment and type your solution here
+\begin{solution} %Uncomment and type your solution here
+
+    Para este ejercicio escribi un smart contract en solidity con dos funciones. La idea es cargar fondos
+    en el contrato y luego poder usar esos fondos para transferir a quien indiquemos.
+
+    \begin{itemize}
+        \item fondear contrato: 
+        
+        Como lo dice su nombre sirve para que fondeemos el contrato.
+        Es importante que sea payable para poder envia eth en la transacción.
+        \item transferir: 
+        
+        Esta función envía a 
+        destinatario el monto indicado, usando los fondos del contrato. (la direccion debe ser payable porque le
+        vamos a enviar eth)
+
+
+        Primero llamé a la función fondear y para enviarle 0.05 eth (en wei) al contrato y luego use
+        la funcion transferir para enviar esos eth a mi compañero
+
+        direccion del contrato: 0xf4d279F94919d3389ff3ba09f73c370cf37D7F55
+
+        mi direccion: 0x65De8AcFCC18B4D182857Cf19c687AF735Ffc9CD
+        
+        direccion de mi compañero: 
+        
+        transaccion fondeo del contrato: 
+        
+        0x9e7bddbea7c49ec041893743b812023f3875ec7755a28eedbd66f85e6e3154b7
+        
+        transaccion envío: 
+
+
+    \end{itemize}
     
-%\end{solution}
+\end{solution}
+\begin{verbatim}
+
+    // SPDX-License-Identifier: GPL-3.0
+
+    pragma solidity >=0.7.0 <0.9.0;
+
+    contract Transfer{
+        
+        function fondear_contrato() public payable {} 
+
+        function transferir(address payable destinatario, uint monto) public{
+            require(address(this).balance >= monto, "Fondos insuficientes");
+            destinatario.transfer(monto);
+        }
+    }
+
+\end{verbatim}
 
 \newpage
   
