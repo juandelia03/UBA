@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.4.23)  9 SEP 2025 22:58
+This is pdfTeX, Version 3.141592653-2.6-1.40.27 (TeX Live 2025) (preloaded format=pdflatex 2025.4.23)  9 SEP 2025 23:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -724,7 +724,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 [5]
 
 [6]
-Overfull \hbox (0.1907pt too wide) in paragraph at lines 309--310
+Overfull \hbox (0.1907pt too wide) in paragraph at lines 310--311
 []\OT1/pplx/m/n/12 (-8) https://www.geeksforgeeks.org/computer-networks/rsa-and
 -digital-signatures/ 
  []
@@ -734,13 +734,13 @@ Overfull \hbox (0.1907pt too wide) in paragraph at lines 309--310
 [7]
 
 [8]
-Overfull \hbox (3.53746pt too wide) in paragraph at lines 382--383
+Overfull \hbox (3.53746pt too wide) in paragraph at lines 383--384
 []\OT1/pplx/m/n/12 (-20) direccion de mi compa[]nero: 0xC57f1Cb50Ec19B8735ea28a
 6d84AEe85f0d88c07 
  []
 
 
-Overfull \hbox (26.59515pt too wide) in paragraph at lines 414--414
+Overfull \hbox (26.59515pt too wide) in paragraph at lines 412--412
  []        \OT1/cmtt/m/n/12 function transferir(address payable destinatario, u
 int monto) public{[] 
  []
@@ -748,7 +748,7 @@ int monto) public{[]
 
 
 [9]
-Overfull \hbox (20.42015pt too wide) in paragraph at lines 414--414
+Overfull \hbox (20.42015pt too wide) in paragraph at lines 412--412
  []            \OT1/cmtt/m/n/12 require(address(this).balance >= monto, "Fondos
  insuficientes");[] 
  []
@@ -760,7 +760,7 @@ Overfull \hbox (20.42015pt too wide) in paragraph at lines 414--414
 [11]
 
 [12]
-Underfull \hbox (badness 10000) in paragraph at lines 519--520
+Underfull \hbox (badness 10000) in paragraph at lines 517--518
 
  []
 
@@ -802,7 +802,7 @@ xlive/2025/texmf-dist/fonts/type1/public/fpl/fplrc8a.pfb></usr/local/texlive/20
 25/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2025/texm
 f-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2025/texmf-dist/
 fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on Blockchains_HW1.pdf (13 pages, 533834 bytes).
+Output written on Blockchains_HW1.pdf (13 pages, 533873 bytes).
 PDF statistics:
  161 PDF objects out of 1000 (max. 8388607)
  116 compressed objects within 2 object streams
