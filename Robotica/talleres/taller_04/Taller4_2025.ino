@@ -1,4 +1,4 @@
-#define SIMULACION 1
+#define SIMULACION 0
 #define EJERCICIO 5
 
 #if !SIMULACION
@@ -133,6 +133,8 @@ enum Estado { AVANZAR, RETROCEDER, GIRAR};
 enum Estado { AVANZAR, GIRAR_DERECHA, GIRAR_IZQUIERDA };
 #elif EJERCICIO == 4
 enum Estado { AVANZAR, RETROCEDER, GIRAR, GIRAR_DERECHA, GIRAR_IZQUIERDA };    //👉👈
+#elif EJERCICIO == 5 
+enum Estado { AVANZAR, ALEJARSE, ACERCARSE };
 #endif
 
 
@@ -290,7 +292,36 @@ void comportamiento_loop()
 	// Proceso estados, chequeo condiciones y ejecuto transiciones
 	
 	//...
-  	#
+  	
+  #elif EJERCICIO == 5
+  
+  float sonar_dist = sonar_distance();
+
+  if(estado == AVANZAR){
+    pid_set_speed(SPEED_NORMAL,SPEED_NORMAL);
+    if(sonar_dist > 0.8){
+      // girar izquierda
+      estado = ACERCARSE;
+    }
+    else if(sonar_dist <= 0.4){
+      estado = ALEJARSE;
+    }
+  }
+
+  else if(estado == ACERCARSE){
+    pid_set_speed(SPEED_SLOW,SPEED_NORMAL);
+    if(ir_distance(IR_LEFT) < 0.3 || sonar_dist <= 0.6){
+      estado = AVANZAR;
+    }
+  }
+
+  else if(estado == ALEJARSE){
+    pid_set_speed(SPEED_NORMAL,SPEED_SLOW);
+    if(ir_distance(IR_LEFT) > 0.1 || sonar_dist > 0.6){
+      estado = AVANZAR;
+    }
+  }
+
   	#endif
 	
 }
