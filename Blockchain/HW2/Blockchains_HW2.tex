@@ -1,0 +1,274 @@
+\documentclass[12pt,addpoints,answers]{exam}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amsfonts,amssymb,amsthm}
+\usepackage[margin=1in]{geometry}
+\usepackage{mathtools}
+\usepackage{hyperref}
+\usepackage{fullpage}
+\usepackage{microtype}
+\usepackage{xspace}
+\usepackage[svgnames]{xcolor}
+\usepackage[sc]{mathpazo}
+\usepackage{enumitem}
+\usepackage{bm}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\pagestyle{head}
+
+%----------Header--------------------%
+\def\course{{\sc Fundamentos y Aplicaciones de Blockchains}}
+\def\term{Depto. de Computaci\'{o}n, UBA, 2do. Cuatrimestre 2025}
+\def\prof{Lecturer: Juan Garay}
+\newcommand{\handout}[5]{
+   \renewcommand{\thepage}{\arabic{page}}
+   \begin{center}
+   \framebox{
+      \vbox{
+    \hbox to 5.78in { \hfill \large{\course} \hfill }
+    \vspace{2mm}
+%    \hbox to 5.78in { \hfill \large{\prof} \hfill }
+%       \vspace{2mm}
+       \hbox to 5.78in { {\Large \hfill \textbf{#5}  \hfill} }
+       \vspace{2mm}
+       \hbox to 5.78in { \term \hfill \emph{#2}}
+       \hbox to 5.78in { {#3 \hfill \emph{#4}}}
+      }
+   }
+   \end{center}
+   \vspace*{4mm}
+}
+\newcommand{\hw}[4]{\handout{#1}{#2}{#3}{#4}{Homework #1}}
+
+% -- For ignoring stuff -- %
+\newcommand{\ignore}[1]{}
+
+\begin{document}
+
+%----Specs: change accordingly-----%
+\newif\ifstudent % comment out false
+\studenttrue 
+% \studentfalse
+
+\def\hwnum{2}
+\def\issuedate{25/9/25}
+\def\duedate{14/10/25, 15:00 hs} % 
+\def\yourname{Juan DElia} % put your name here
+%------------------------------%
+
+\ifstudent
+\hw{\hwnum}{\issuedate}{Student: \yourname}{Due: \duedate}%
+\else
+\hw{\hwnum}{\issuedate}{\prof}{Due: \duedate}%
+\fi
+
+% \ignore{
+
+\noindent \textbf{Instructions}
+
+\begin{itemize}
+    \item Upload your solution to Campus; make sure it's only one file, and clearly write your name on the first page. Name the file \textsf{`$<$your last name$>$\_HW1.pdf.'} 
+    %{\bf Important:} Make sure to tap {\bf Turn in} after you upload your solution.   
+      
+     If you are proficient with \LaTeX, you may also typeset your submission and submit in PDF format. To do so, uncomment the ``\%\textbackslash begin\{solution\}'' and ``\%\textbackslash end\{solution\}'' lines and write your solution between those two command lines.
+    
+      \item Your solutions will be graded on \emph{correctness} and
+    \emph{clarity}. You should only submit work that you believe to be
+    correct.
+    % , and you will get significantly more partial credit if you     clearly identify the gap(s) in your solution.
+    
+    \item You may collaborate with others on this problem set.  However,
+    you must \textbf{{write up your own solutions}} and \textbf{{list
+      your collaborators and any external sources (including ChatGPT and similar generative AI chatbots)}} for each
+    problem. Be ready to explain your solutions orally to a member of the course staff
+    if asked.
+    
+    \ignore{
+    \item For problems that require you to provide an algorithm, you must
+    give a precise description of the algorithm, together with a proof
+    of correctness and an analysis of its running time. You may use
+    algorithms from class as subroutines. You may also use any facts
+    that we proved in class or from the book.
+    } %IGNORE
+    
+\end{itemize}
+
+\noindent This homework contains \numquestions\ questions,
+% \numpages\ pages
+for a total of \numpoints \ points.
+% and \numbonuspoints\ bonus points.
+
+%\medskip
+\newpage
+
+%} %IGNORE
+
+\begin{questions}
+
+
+\question We saw in class the notion of {\em digital signatures} and their security properties, {\em existential unforgeability} being an important one. 
+
+\begin{parts}
+    \part[5] Describe the purpose of a {\em Public-Key Infrastructure} (PKI). Can the security properties of a digital signature be guaranteed without a PKI? Elaborate.
+    
+    \begin{solution} %Uncomment and type your solution here
+        El propósito de PKI es que haya una autoridad confiable, cuya public key es conocida, 
+        mediante la cual podemos asociar a participantes de la red con sus correspondientes public keys.
+        
+        Las propiedades de seguridad de las firmas digitales no se pueden conseguir sin PKI:
+        \begin{enumerate}
+          \item Autenticación: Si no podemos asociar entidades con public keys no tenemos razon para creer
+          que dicha entidad efectivamente firmo ese mensaje. Lo único que sabemos es que un mensaje fue enviado por
+          quien posea dicha public key (que a priori es desconocido).
+
+          \item Non-repudiation: La idea es que quien firmó, no pueda negar haberlo hecho. Si no hay una entidad que
+          linkee a quien envió el mensaje y su public key, el recipiente del mismo no puede probar quien lo envió efectivamente
+          (solo puede probar con que pk se firmó).
+
+          \item Integridad: Esto si se mantiene, una vez firmado no se puede alterar al documento.
+
+        \end{enumerate}
+    \end{solution}
+
+    \part[5] Bitcoin transactions use the ECDSA signature scheme. Does Bitcoin assume a PKI? If not, reconcile with the above argument.
+ 
+    \begin{solution} %Uncomment and type your solution here
+      Bitcoin no asume PKI. Esto no es un impedimento pues no es necesario vincular documentos y entidades reales, simplemente
+      hay que asegurar que se guarden las transacciones entre nodos. Cuando se realiza una transacción quien la envía la firma con 
+      su clave privada y quien la recibe puede verificarla usando la clave pública de quién la envió. (ahí es donde se usa el esquema de firmas).
+      
+      Estas transacciones luego son organizadas por los mineros que solo deberían aceptar transacciones validas.
+    \end{solution}
+
+\end{parts}
+
+\newpage
+
+\question[10] Refer to Algorithm 4 (Main Loop) in [GKL15]. We saw in class that blockchains would start from a ``genesis'' block, which would provide an unpredictable string to start mining from. Yet, notice that in Algorithm 4 mining starts from the empty string (${\cal C} \leftarrow \varepsilon$). How come? Explain why this works.
+
+\begin{solution} %Uncomment and type your solution here
+    El algoritmo inicialmente inicializa la cadena en si, podemos pensarlo como la estructura de datos, por eso es vacía al igual que st. 
+    Inmediatamente después va a poner el flag init en falso y va a esperar a que aparezca una cadena para leer, y en caso de cumplir maxvalid() 
+    mediante pow definir $C_{new}$ que puede ser la misma cadena o una que minó un bloque nuevo para finalmente broadcastearla.
+
+    En el momento que se crea la blockchain entonces va a estar vacía. Alguien va a escribir el primer bloque (genesis) y mediante ese mecanismo
+    va a ser difundida la nueva cadena que lo contenga, pues va a ser la más larga.
+
+    Básicamente no se indica explícitamente el bloque génesis, pero mediante el algoritmo que va adoptando la cadena más larga, la 
+    primer cadena que se adopte se debería seguir exteniendo. Así la primer cadena de longitud uno contiene al bloque genésis y de ahí
+    en adelante se extiende sobre la misma.
+
+\end{solution}
+
+\newpage
+
+
+\question Refer to Algorithm 1 ({\sf validate}) in [GKL15], which implements the {\em chain validation predicate}. 
+
+\begin{parts}
+
+\part[5] Rewrite {\sf validate} so that it starts checking from the {\em beginning} of the chain. 
+
+% \begin{solution} %Uncomment and type your solution here
+    
+
+\begin{algorithm}
+\caption{Validate chequeando desde el inicio de la cadena}
+\begin{algorithmic}[1]
+\Function{validate}{$C$}
+\State $b \gets V(\mathbf{x}_C)$
+\If{$b \land (C \ne \varepsilon)$} \Comment{The chain is non-empty and meaningful w.r.t. $V(\cdot)$}
+\State $\langle s, x, ctr \rangle \gets \text{head}(C)$
+\State $s' \gets H(ctr, G(s, x))$
+\Repeat
+\State $\langle s, x, ctr \rangle \gets \text{head}(C)$
+\If{$\text{validblock}_q^T (\langle s, x, ctr \rangle) \land (H(ctr, G(s,x)) = s')$}
+\State $s' \gets s$ \Comment{Retain hash value}
+\State $C \gets C^{[1]}$ \Comment{Remove the head from $C$}
+\Else
+\State $b \gets \text{False}$
+\EndIf
+\Until{$(C = \varepsilon) \lor (b = \text{False})$}
+\EndIf
+\State \Return $b$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+% \end{solution}
+
+\part[5] Discuss pros and cons of this approach, compared to Algorithm 1's.
+
+% \begin{solution} %Uncomment and type your solution here
+    
+%\end{solution}
+
+\end{parts}
+
+\newpage
+
+\question {\bf Smart contract programming:} {\em Matching Pennies}. This assignment will focus on writing your own smart contract to implement the \href{https://en.wikipedia.org/wiki/Matching_pennies}{Matching Pennies} game. The contract should allow two players (A, B) to play a game of Matching Pennies at any point in time. Each player picks a value of two options---for example, the options might be \{0, 1\}, \{`a’, ‘b’\}, \{True, False\}, etc. If both players pick the same value, the first player wins; if players pick different values, the second player wins. The winner gets 0.1 ETH as reward. After a game ends, two different players should be able to use your contract to play a new game.
+
+\noindent {\bf Example:} Let A, B be two players who play the game, each with 0.5 ETH.  A picks 0 and B picks 0, so A wins. After the game ends, A’s balance is 0.6 ETH (perhaps minus some gas fees, if necessary).
+
+You should implement the smart contract and deploy it on the course's Sepolia Testnet.  Your contract should be as {\em secure}, {\em gas efficient}, and {\em fair} as possible. After deploying your contract, you should engage with other student's contract and play a game on his/her contract. Before you engage with a fellow student’s smart contract, you should evaluate their code and analyze its features in terms of security and fairness (refer to Lecture 10). You should provide:
+
+\begin{parts}
+
+\part[10] The code of your contract, together with a detailed description of the high-level decisions you made for the design of your contract,
+including:  
+\begin{itemize}
+\item Who pays for the reward of the winner?
+\item How is the reward sent to the winner?
+\item How is it guaranteed that a player cannot cheat?
+\item What data type/structure did you use for the pick options and why?
+\end{itemize}
+
+%\begin{solution} %Uncomment and type your solution here
+    
+%\end{solution}
+
+\part[5] A detailed gas consumption evaluation of your implementation, including: 
+\begin{itemize}
+\item The cost of deploying and interacting with your contract.
+\item Whether your contract is {\em fair} to both players, including whether one player has to
+pay more gas than the other and why.
+\item Techniques to make your contract more cost efficient and/or fair.
+\end{itemize}
+
+%\begin{solution} %Uncomment and type your solution here
+    
+%\end{solution}
+
+\part[5] A thorough list of potential hazards and vulnerabilities that {\em may} occur in your contract; provide a detailed analysis of the security mechanisms you use to mitigate such hazards.
+
+%\begin{solution} %Uncomment and type your solution here
+    
+%\end{solution}
+
+\part[5] A description of your analysis of your fellow student’s contract (along with relative code snippets of their contract, where needed for readability), including: 
+\begin{itemize}
+\item Any vulnerabilities discovered?
+\item How could a player exploit these vulnerabilities to win the game?
+\end{itemize}
+
+%\begin{solution} %Uncomment and type your solution here
+    
+%\end{solution}
+
+\part[5] The transaction history of an execution of a game on your contract.
+
+%\begin{solution} %Uncomment and type your solution here
+    
+%\end{solution}
+
+\end{parts}
+
+\newpage
+
+~\\
+
+\end{questions}
+
+\end{document}
