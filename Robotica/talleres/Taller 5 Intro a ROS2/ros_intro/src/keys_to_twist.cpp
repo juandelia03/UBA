@@ -1,4 +1,9 @@
 #include "keys_to_twist.h"
+#define FORWARD 1.0
+#define BACKWARDS -1.0
+#define LEFT 1.0
+#define RIGHT -1.0
+#define STILL 0.0
 
 using namespace robmovil;
 
@@ -16,63 +21,71 @@ KeysToTwist::KeysToTwist() : Node("nh")
   up_ = down_ = left_ = right_ = false;
 }
 
+void stop(geometry_msgs::msg::Twist &twist)
+{
+  twist.linear.x = STILL;
+}
+
+void stop_spinning(geometry_msgs::msg::Twist &twist)
+{
+  twist.angular.z = STILL;
+}
+
 void KeysToTwist::on_key_up(const keyboard_msgs::msg::Key::SharedPtr key_event)
 {
   geometry_msgs::msg::Twist twist;
 
-  switch( key_event->code )
+  switch (key_event->code)
   {
-    case keyboard_msgs::msg::Key::KEY_UP:
-      // completar ...
-      break;
+  case keyboard_msgs::msg::Key::KEY_UP:
+    stop(twist);
+    break;
 
-    case keyboard_msgs::msg::Key::KEY_DOWN:
-      // completar ...
-      break;
+  case keyboard_msgs::msg::Key::KEY_DOWN:
+    stop(twist);
+    break;
 
-    case keyboard_msgs::msg::Key::KEY_LEFT:
-      // completar ...
-      break;
+  case keyboard_msgs::msg::Key::KEY_LEFT:
+    stop_spinning(twist);
+    break;
 
-    case keyboard_msgs::msg::Key::KEY_RIGHT:
-      // completar ...
-      break;
+  case keyboard_msgs::msg::Key::KEY_RIGHT:
+    stop_spinning(twist);
+    break;
 
-    default:
-      return;
+  default:
+    return;
   }
-  // completar ...
 
-  twist_pub_->publish( twist );
+  twist_pub_->publish(twist);
 }
 
 void KeysToTwist::on_key_down(const keyboard_msgs::msg::Key::SharedPtr key_event)
 {
   geometry_msgs::msg::Twist twist;
 
-  switch( key_event->code )
+  switch (key_event->code)
   {
-    case keyboard_msgs::msg::Key::KEY_UP:
-      // completar ...
-      break;
+  case keyboard_msgs::msg::Key::KEY_UP:
+    twist.linear.x = FORWARD;
+    break;
 
-    case keyboard_msgs::msg::Key::KEY_DOWN:
-      // completar ...
-      break;
+  case keyboard_msgs::msg::Key::KEY_DOWN:
+    twist.linear.x = BACKWARDS;
+    break;
 
-    case keyboard_msgs::msg::Key::KEY_LEFT:
-      // completar ...
-      break;
+  case keyboard_msgs::msg::Key::KEY_LEFT:
+    twist.angular.z = LEFT;
+    break;
 
-    case keyboard_msgs::msg::Key::KEY_RIGHT:
-      // completar ...
-      break;
+  case keyboard_msgs::msg::Key::KEY_RIGHT:
+    twist.angular.z = RIGHT;
+    break;
 
-    default:
-      return;
+  default:
+    return;
   }
 
-  // completar ...
-  
-  twist_pub_->publish( twist );
+
+  twist_pub_->publish(twist);
 }

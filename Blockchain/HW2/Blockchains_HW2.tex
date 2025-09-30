@@ -170,30 +170,46 @@ for a total of \numpoints \ points.
 \part[5] Rewrite {\sf validate} so that it starts checking from the {\em beginning} of the chain. 
 
 % \begin{solution} %Uncomment and type your solution here
-    
+
+Asumi que existe la funcion tail que devuelve la cadena sin el primer elemento y first que dada
+una cadena devuelve su primer elemento.
 
 \begin{algorithm}
 \caption{Validate chequeando desde el inicio de la cadena}
 \begin{algorithmic}[1]
 \Function{validate}{$C$}
-\State $b \gets V(\mathbf{x}_C)$
-\If{$b \land (C \ne \varepsilon)$} \Comment{The chain is non-empty and meaningful w.r.t. $V(\cdot)$}
-\State $\langle s, x, ctr \rangle \gets \text{head}(C)$
-\State $s' \gets H(ctr, G(s, x))$
-\Repeat
-\State $\langle s, x, ctr \rangle \gets \text{head}(C)$
-\If{$\text{validblock}_q^T (\langle s, x, ctr \rangle) \land (H(ctr, G(s,x)) = s')$}
-\State $s' \gets s$ \Comment{Retain hash value}
-\State $C \gets C^{[1]}$ \Comment{Remove the head from $C$}
-\Else
-\State $b \gets \text{False}$
-\EndIf
-\Until{$(C = \varepsilon) \lor (b = \text{False})$}
-\EndIf
-\State \Return $b$
+
+  \State $b \gets V(\mathbf{x}_C)$
+  \If{$b \land (C \ne \varepsilon)$}
+
+    \Repeat
+
+      \State $\langle s, x, ctr \rangle \gets \text{first}(C)$
+      \State $s' \gets H(ctr, G(s, x))$
+      \State $C \gets \text{tail}(C)$
+      
+      \If{$C = \varepsilon \land \text{validblock}_q^T (\langle s, x, ctr \rangle)$ } \Comment{Si es el ultimo solo chequea valid}
+        \State break
+      \EndIf
+
+      \State $\langle s, x, ctr \rangle \gets \text{first}(C)$ \Comment{hay que chequear que el siguiente tiene su hash}
+
+
+      \If{$\text{validblock}_q^T (\langle s, x, ctr \rangle) \land s == s'$}
+        \State continue
+      \Else
+        \State $b \gets \text{False}$
+      \EndIf
+
+    \Until{$(C = \varepsilon) \lor (b = \text{False})$}
+
+  \EndIf
+
+  \State \Return $b$
 \EndFunction
 \end{algorithmic}
 \end{algorithm}
+
 
 
 % \end{solution}
