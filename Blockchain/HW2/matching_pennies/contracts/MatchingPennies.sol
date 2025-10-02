@@ -9,7 +9,7 @@ contract MatchingPennies{
         bool present; // si hago playersMapping[add] con una address que no esta, present sera 0 
         bool guessed;
         bool revealed;
-        int8 choice;
+        bool choice;
         bytes32 secret;
         uint256 balance; //balance que tiene para hacer withdraw
     }
@@ -44,12 +44,12 @@ contract MatchingPennies{
         playersMapping[_playerAddress].present = false;
         playersMapping[_playerAddress].guessed = false;
         playersMapping[_playerAddress].revealed = false;
-        playersMapping[_playerAddress].choice = -1;
+        playersMapping[_playerAddress].choice = false;
         playersMapping[_playerAddress].secret = 0;
     }
 
-    function revealSecret(int8 _choice, bytes32 secret) public{
-        require(_choice == 1 || _choice == 0, "solo se puede elegir cero o uno");
+    function revealSecret(bool _choice, bytes32 secret) public{
+        // require(_choice == 1 || _choice == 0, "solo se puede elegir cero o uno");
         require(playersMapping[msg.sender].present , "Solo puede revelar su eleccion un jugador del juego");
         require(playersMapping[msg.sender].secret == keccak256(abi.encodePacked(_choice, secret)), 
         "El secreto y choice deben ser los ingresados originalmente");
@@ -59,8 +59,8 @@ contract MatchingPennies{
 
         //si ambos ya revelaron puedo actualizar el balance del ganador
         if(playersMapping[player1Address].revealed && playersMapping[player2Address].revealed){
-            int8 choice1 = playersMapping[player1Address].choice;
-            int8 choice2 = playersMapping[player2Address].choice;
+            bool choice1 = playersMapping[player1Address].choice;
+            bool choice2 = playersMapping[player2Address].choice;
             if(choice1 == choice2) { updateBalance(player1Address); }
             else { updateBalance(player2Address); }
             //resetear a los jugadores y "desconectarlos" del juego

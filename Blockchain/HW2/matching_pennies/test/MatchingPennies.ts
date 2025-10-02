@@ -97,10 +97,10 @@ describe("MatchingPennies", function () {
       await game.connect(player2).joinGame();
 
       const hash1 = ethers.keccak256(
-        ethers.solidityPacked(["uint8", "bytes32"], [0, secret1])
+        ethers.solidityPacked(["bool", "bytes32"], [false, secret1])
       );
       const hash2 = ethers.keccak256(
-        ethers.solidityPacked(["uint8", "bytes32"], [1, secret2])
+        ethers.solidityPacked(["bool", "bytes32"], [true, secret2])
       );
 
       await game
@@ -151,22 +151,6 @@ describe("MatchingPennies", function () {
   });
 
   describe("revealSecret", function () {
-    it("debería revertir si _choice no es 0 o 1", async function () {
-      const secret = ethers.encodeBytes32String("secreto");
-      await game.connect(player1).joinGame();
-      await game.connect(player2).joinGame();
-
-      const hash = ethers.keccak256(
-        ethers.solidityPacked(["uint8", "bytes32"], [0, secret])
-      );
-      await game
-        .connect(player1)
-        .guess(hash, { value: ethers.parseEther("0.1") });
-
-      await expect(
-        game.connect(player1).revealSecret(2, secret)
-      ).to.be.revertedWith("solo se puede elegir cero o uno");
-    });
 
     it("debería revertir si quien llama no está en el juego", async function () {
       const secret = ethers.encodeBytes32String("secreto");
@@ -215,10 +199,10 @@ describe("MatchingPennies", function () {
       await game.connect(player2).joinGame();
 
       const hash1 = ethers.keccak256(
-        ethers.solidityPacked(["uint8", "bytes32"], [0, secret1])
+        ethers.solidityPacked(["bool", "bytes32"], [false, secret1])
       );
       const hash2 = ethers.keccak256(
-        ethers.solidityPacked(["uint8", "bytes32"], [1, secret2])
+        ethers.solidityPacked(["bool", "bytes32"], [true, secret2])
       );
 
       await game
@@ -252,10 +236,10 @@ describe("MatchingPennies", function () {
       await game.connect(player2).joinGame();
 
       const hash1 = ethers.keccak256(
-        ethers.solidityPacked(["uint8", "bytes32"], [0, secret1])
+        ethers.solidityPacked(["bool", "bytes32"], [false, secret1])
       );
       const hash2 = ethers.keccak256(
-        ethers.solidityPacked(["uint8", "bytes32"], [0, secret2])
+        ethers.solidityPacked(["bool", "bytes32"], [false, secret2])
       );
 
       await game
@@ -297,10 +281,10 @@ describe("MatchingPennies", function () {
       await game.connect(player2).joinGame();
 
       const hash1 = ethers.keccak256(
-        ethers.solidityPacked(["uint8", "bytes32"], [0, secret1])
+        ethers.solidityPacked(["bool", "bytes32"], [false, secret1])
       );
       const hash2 = ethers.keccak256(
-        ethers.solidityPacked(["uint8", "bytes32"], [1, secret2])
+        ethers.solidityPacked(["bool", "bytes32"], [true, secret2])
       );
 
       await game
