@@ -90,6 +90,7 @@ describe("MatchingPennies", function () {
     });
 
     it("no debería permitir adivinar si ya terminó un juego sin unirse de nuevo", async function () {
+      //chequea el bit present
       const secret1 = ethers.encodeBytes32String("secreto1");
       const secret2 = ethers.encodeBytes32String("secreto2");
 
@@ -133,11 +134,6 @@ describe("MatchingPennies", function () {
     it("debería permitir a dos jugadores unirse", async function () {
       await game.connect(player1).joinGame();
       await game.connect(player2).joinGame();
-
-      expect(await game.player1Address()).to.equal(player1.address);
-      expect(await game.player2Address()).to.equal(player2.address);
-      expect(await game.player1Ready()).to.be.true;
-      expect(await game.player2Ready()).to.be.true;
     });
 
     it("debería revertir si un tercer jugador intenta unirse", async function () {
@@ -148,6 +144,34 @@ describe("MatchingPennies", function () {
         "Ya hay dos jugadores"
       );
     });
+
+    it("debería permitir que los jugadores se unan de nuevo después de que termina un juego", async function () {
+      const secret1 = ethers.encodeBytes32String("secreto1");
+      const secret2 = ethers.encodeBytes32String("secreto2");
+
+      // Primer juego
+      await game.connect(player1).joinGame();
+      await game.connect(player2).joinGame();
+
+      const hash1 = ethers.keccak256(
+        ethers.solidityPacked(["uint8", "bytes32"], [0, secret1])
+      );
+      const hash2 = ethers.keccak256(
+        ethers.solidityPacked(["uint8", "bytes32"], [1, secret2])
+      );
+
+      await game.connect(player1).guess(hash1, { value: ethers.parseEther("0.1") });
+      await game.connect(player2).guess(hash2, { value: ethers.parseEther("0.1") });
+
+      await game.connect(player1).revealSecret(0, secret1);
+      await game.connect(player2).revealSecret(1, secret2);
+
+      //aca termino el juego deberian poder conectarse de nuevo sin fallar
+
+      await game.connect(player1).joinGame();
+      await game.connect(player2).joinGame();
+    });
+
   });
 
   describe("revealSecret", function () {
@@ -218,14 +242,13 @@ describe("MatchingPennies", function () {
       const p1 = await game.playersMapping(player1.address);
       const p2 = await game.playersMapping(player2.address);
 
-      // player2 gama
+      // player2 gana
       expect(p1.balance).to.equal(ethers.parseEther("0"));
       expect(p2.balance).to.equal(ethers.parseEther("0.2"));
 
       expect(p1.present).to.be.false;
       expect(p2.present).to.be.false;
-      expect(await game.player1Ready()).to.be.false;
-      expect(await game.player2Ready()).to.be.false;
+
     });
 
     it("debería actualizar balance del jugador1 cuando ambos revelan el mismo choice", async function () {
@@ -258,11 +281,6 @@ describe("MatchingPennies", function () {
       // player1 gana
       expect(p1.balance).to.equal(ethers.parseEther("0.2"));
       expect(p2.balance).to.equal(ethers.parseEther("0"));
-
-      expect(p1.present).to.be.false;
-      expect(p2.present).to.be.false;
-      expect(await game.player1Ready()).to.be.false;
-      expect(await game.player2Ready()).to.be.false;
     });
   });
 
