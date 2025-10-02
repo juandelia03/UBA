@@ -111,8 +111,8 @@ describe("MatchingPennies", function () {
         .connect(player2)
         .guess(hash2, { value: ethers.parseEther("0.1") });
 
-      await game.connect(player1).revealSecret(0, secret1);
-      await game.connect(player2).revealSecret(1, secret2);
+      await game.connect(player1).revealSecret(false, secret1);
+      await game.connect(player2).revealSecret(true, secret2);
 
       const newSecret = ethers.encodeBytes32String("nuevoSecreto");
       await expect(
@@ -163,8 +163,8 @@ describe("MatchingPennies", function () {
       await game.connect(player1).guess(hash1, { value: ethers.parseEther("0.1") });
       await game.connect(player2).guess(hash2, { value: ethers.parseEther("0.1") });
 
-      await game.connect(player1).revealSecret(0, secret1);
-      await game.connect(player2).revealSecret(1, secret2);
+      await game.connect(player1).revealSecret(false, secret1);
+      await game.connect(player2).revealSecret(true, secret2);
 
       //aca termino el juego deberian poder conectarse de nuevo sin fallar
 
@@ -189,7 +189,7 @@ describe("MatchingPennies", function () {
         .guess(hash, { value: ethers.parseEther("0.1") });
 
       await expect(
-        game.connect(player3).revealSecret(0, secret)
+        game.connect(player3).revealSecret(false, secret)
       ).to.be.revertedWith(
         "Solo puede revelar su eleccion un jugador del juego"
       );
@@ -209,7 +209,7 @@ describe("MatchingPennies", function () {
 
       const wrongSecret = ethers.encodeBytes32String("mal");
       await expect(
-        game.connect(player1).revealSecret(1, wrongSecret)
+        game.connect(player1).revealSecret(true, wrongSecret)
       ).to.be.revertedWith(
         "El secreto y choice deben ser los ingresados originalmente"
       );
@@ -236,8 +236,8 @@ describe("MatchingPennies", function () {
         .connect(player2)
         .guess(hash2, { value: ethers.parseEther("0.1") });
 
-      await game.connect(player1).revealSecret(0, secret1);
-      await game.connect(player2).revealSecret(1, secret2);
+      await game.connect(player1).revealSecret(false, secret1);
+      await game.connect(player2).revealSecret(true, secret2);
 
       const p1 = await game.playersMapping(player1.address);
       const p2 = await game.playersMapping(player2.address);
@@ -272,8 +272,8 @@ describe("MatchingPennies", function () {
         .connect(player2)
         .guess(hash2, { value: ethers.parseEther("0.1") });
 
-      await game.connect(player1).revealSecret(0, secret1);
-      await game.connect(player2).revealSecret(0, secret2);
+      await game.connect(player1).revealSecret(false, secret1);
+      await game.connect(player2).revealSecret(false, secret2);
 
       const p1 = await game.playersMapping(player1.address);
       const p2 = await game.playersMapping(player2.address);
@@ -312,8 +312,8 @@ describe("MatchingPennies", function () {
         .connect(player2)
         .guess(hash2, { value: ethers.parseEther("0.1") });
 
-      await game.connect(player1).revealSecret(0, secret1);
-      await game.connect(player2).revealSecret(1, secret2);
+      await game.connect(player1).revealSecret(false, secret1);
+      await game.connect(player2).revealSecret(true, secret2);
 
       const balanceBefore = await ethers.provider.getBalance(player2.address);
       await game.connect(player2).withdraw();
@@ -329,4 +329,148 @@ describe("MatchingPennies", function () {
       expect(playerData.balance).to.equal(0);
     });
   });
+
+
+  describe("restartGame", function () {
+    let secret1: any;
+    let secret2: any;
+
+
+
+
+    beforeEach(async function () {
+      secret1 = ethers.encodeBytes32String("s1");
+      secret2 = ethers.encodeBytes32String("s2");
+
+      await game.connect(player1).joinGame();
+      await game.connect(player2).joinGame();
+    });
+
+    it("debería revertir si no pasó el deadline", async function () {
+      await expect(game.restartGame()).to.be.revertedWith("Deben pasar 24 horas");
+    });
+
+
+
+    it("jugador que hizo reveal y el otro solo guess gana por abandono", async function () {
+      const hash1 = ethers.keccak256(
+        ethers.solidityPacked(["bool", "bytes32"], [false, secret1])
+      );
+      const hash2 = ethers.keccak256(
+        ethers.solidityPacked(["bool", "bytes32"], [true, secret2])
+      );
+
+      await game.connect(player1).guess(hash1, { value: ethers.parseEther("0.1") });
+      await game.connect(player2).guess(hash2, { value: ethers.parseEther("0.1") });
+
+      await game.connect(player1).revealSecret(false, secret1);
+
+      await ethers.provider.send("evm_increaseTime", [25 * 3600]);
+      await ethers.provider.send("evm_mine", []);
+
+      await game.restartGame();
+
+      const p1 = await game.playersMapping(player1.address);
+      const p2 = await game.playersMapping(player2.address);
+
+      expect(p1.balance).to.equal(ethers.parseEther("0.2"));
+      expect(p2.balance).to.equal(0);
+    });
+
+    it("jugador que hizo guess y el otro no recupera 0.1 ETH", async function () {
+      const hash1 = ethers.keccak256(
+        ethers.solidityPacked(["bool", "bytes32"], [false, secret1])
+      );
+
+      await game.connect(player1).guess(hash1, { value: ethers.parseEther("0.1") });
+
+      await ethers.provider.send("evm_increaseTime", [25 * 3600]);
+      await ethers.provider.send("evm_mine", []);
+
+      await game.restartGame();
+
+      const p1 = await game.playersMapping(player1.address);
+      const p2 = await game.playersMapping(player2.address);
+
+      expect(p1.balance).to.equal(ethers.parseEther("0.1"));
+      expect(p2.balance).to.equal(0);
+    });
+
+    it("resetea el juego permitiendo que los jugadores se unan de nuevo después del restart", async function () {
+      const hash1 = ethers.keccak256(
+        ethers.solidityPacked(["bool", "bytes32"], [false, secret1])
+      );
+      const hash2 = ethers.keccak256(
+        ethers.solidityPacked(["bool", "bytes32"], [true, secret2])
+      );
+
+      await game.connect(player1).guess(hash1, { value: ethers.parseEther("0.1") });
+      await game.connect(player2).guess(hash2, { value: ethers.parseEther("0.1") });
+
+      await ethers.provider.send("evm_increaseTime", [25 * 3600]);
+      await ethers.provider.send("evm_mine", []);
+
+      await game.restartGame();
+
+      // Ahora los jugadores deberían poder unirse de nuevo
+      await game.connect(player1).joinGame();
+      await game.connect(player2).joinGame();
+
+      const p1 = await game.playersMapping(player1.address);
+      const p2 = await game.playersMapping(player2.address);
+
+      expect(p1.present).to.be.true;
+      expect(p2.present).to.be.true;
+    });
+  });
+  it("si ambos hacen guess pero ninguno revela, los balances quedan en 0", async function () {
+    const secret1 = ethers.encodeBytes32String("secreto1");
+    const secret2 = ethers.encodeBytes32String("secreto2");
+
+    await game.connect(player1).joinGame();
+    await game.connect(player2).joinGame();
+
+    const hash1 = ethers.keccak256(
+      ethers.solidityPacked(["bool", "bytes32"], [false, secret1])
+    );
+    const hash2 = ethers.keccak256(
+      ethers.solidityPacked(["bool", "bytes32"], [true, secret2])
+    );
+
+    await game.connect(player1).guess(hash1, { value: ethers.parseEther("0.1") });
+    await game.connect(player2).guess(hash2, { value: ethers.parseEther("0.1") });
+
+    // Avanzamos el tiempo más allá del deadline
+    await ethers.provider.send("evm_increaseTime", [25 * 3600]);
+    await ethers.provider.send("evm_mine", []);
+
+    await game.restartGame();
+
+    const p1 = await game.playersMapping(player1.address);
+    const p2 = await game.playersMapping(player2.address);
+
+    expect(p1.balance).to.equal(0);
+    expect(p2.balance).to.equal(0);
+  });
+
+  it("si ninguno hace guess y pasa el deadline, los balances quedan en 0", async function () {
+    await game.connect(player1).joinGame();
+    await game.connect(player2).joinGame();
+
+    // No hacemos guess ni reveal
+
+    // Avanzamos el tiempo más allá del deadline
+    await ethers.provider.send("evm_increaseTime", [25 * 3600]);
+    await ethers.provider.send("evm_mine", []);
+
+    await game.restartGame();
+
+    const p1 = await game.playersMapping(player1.address);
+    const p2 = await game.playersMapping(player2.address);
+
+    expect(p1.balance).to.equal(0);
+    expect(p2.balance).to.equal(0);
+  });
+
+
 });

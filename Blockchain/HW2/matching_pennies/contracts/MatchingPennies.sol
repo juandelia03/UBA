@@ -16,6 +16,10 @@ contract MatchingPennies {
 
     address player1Address;
     address player2Address;
+
+    // si pasa cierto tiempo cualquiera puede resetear el juego
+    uint256 public deadline;
+
     mapping(address => Player) public playersMapping;
 
     function updateSecret(address player, bytes32 _secret) private {
@@ -101,6 +105,7 @@ contract MatchingPennies {
 
     function joinGame() public {
         require(!player1Ready || !player2Ready, "Ya hay dos jugadores");
+
         if (!player1Ready) {
             player1Address = msg.sender;
             playersMapping[player1Address].present = true;
@@ -109,6 +114,42 @@ contract MatchingPennies {
             player2Address = msg.sender;
             playersMapping[player2Address].present = true;
             player2Ready = true;
+            //cuando se une el segundo jugador pongo un deadline
+            deadline = block.timestamp + 24 hours;
         }
+    }
+    //para evitar
+    // 1. Que un jugador no deje que juegue nadie
+    // 2. que cuando un jugador revele el otro no lo haga porque sabe que perdio
+    function restartGame() public {
+        require(block.timestamp > deadline, "Deben pasar 24 horas");
+        require(player1Ready && player2Ready, "No hay ningun juego en curso");
+        //si algun jugador ya revelo y el otro hizo guess pero no revelo damos como ganador al que revelo
+        if (playersMapping[player1Address].revealed) {
+            // gana por abandono  1
+            updateBalance(player1Address);
+        } else if (playersMapping[player2Address].revealed) {
+            // gana por abandono  2
+            updateBalance(player2Address);
+        }
+        //si uno guessea y el otro no al pasarse el limite tiene la oportunidad de recuperar sus fondos
+        else if (
+            playersMapping[player1Address].guessed &&
+            !playersMapping[player2Address].guessed
+        ) {
+            playersMapping[player1Address].balance += 0.1 ether;
+        } else if (
+            playersMapping[player2Address].guessed &&
+            !playersMapping[player1Address].guessed
+        ) {
+            playersMapping[player2Address].balance += 0.1 ether;
+        }
+
+        //si ambos guessean pero ninguno revela o ninguno guessea el contrato se queda los fondos para penalizarlos
+
+        resetPlayer(player1Address);
+        resetPlayer(player2Address);
+        player1Ready = false;
+        player2Ready = false;
     }
 }
