@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.4.2)  2 OCT 2025 18:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2025.4.2)  5 OCT 2025 16:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -721,10 +721,10 @@ Package microtype Info: Character `013' is missing
 (microtype)             in font `OT1/pplx/m/sc/12'.
 (microtype)             Ignoring protrusion settings for this character.
  [4] [5] [6] [7] [8] [9] [10]
-<txs.png, id=82, 1511.6475pt x 494.84875pt>
+<txs.png, id=81, 1511.6475pt x 494.84875pt>
 File: txs.png Graphic file (type png)
 <use txs.png>
-Package pdftex.def Info: txs.png  used on input line 450.
+Package pdftex.def Info: txs.png  used on input line 453.
 (pdftex.def)             Requested size: 375.80544pt x 123.01721pt.
 
 [11
@@ -732,86 +732,86 @@ pdfTeX warning (ext4): destination with the same identifier (name{figure.1}) ha
 s been already used, duplicate ignored
 <argument> ...shipout:D \box_use:N \l_shipout_box 
                                                   \__shipout_drop_firstpage_...
-l.454 \newpage
+l.457 \newpage
                <./txs.png>]
 Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Overfull \hbox (168.38315pt too wide) in paragraph at lines 614--614
+Overfull \hbox (168.38315pt too wide) in paragraph at lines 617--617
  []        \OT1/cmtt/m/n/12 bool present; // si hago playersMapping[add] con un
 a address que no esta, present sera 0[] 
  []
 
 
-Overfull \hbox (63.4081pt too wide) in paragraph at lines 614--614
+Overfull \hbox (63.4081pt too wide) in paragraph at lines 617--617
  []        \OT1/cmtt/m/n/12 require(msg.value == 0.1 ether, "Para jugar se debe
  enviar 0.1 ether");[] 
  []
 
 [12]
-Overfull \hbox (1.65807pt too wide) in paragraph at lines 614--614
+Overfull \hbox (1.65807pt too wide) in paragraph at lines 617--617
  []            \OT1/cmtt/m/n/12 "Ambos jugadores deben estar listos para empeza
 r a jugar"[] 
  []
 
 
-Overfull \hbox (94.28311pt too wide) in paragraph at lines 614--614
+Overfull \hbox (94.28311pt too wide) in paragraph at lines 617--617
  []        \OT1/cmtt/m/n/12 // require(_choice == 1 || _choice == 0, "solo se p
 uede elegir cero o uno");[] 
  []
 
 
-Overfull \hbox (20.18307pt too wide) in paragraph at lines 614--614
+Overfull \hbox (20.18307pt too wide) in paragraph at lines 617--617
  []            \OT1/cmtt/m/n/12 "El secreto y choice deben ser los ingresados o
 riginalmente"[] 
  []
 
 
-Overfull \hbox (14.00807pt too wide) in paragraph at lines 614--614
+Overfull \hbox (14.00807pt too wide) in paragraph at lines 617--617
  []        \OT1/cmtt/m/n/12 //si ambos ya revelaron puedo actualizar el balance
  del ganador[] 
  []
 
 [13]
-Overfull \hbox (20.18307pt too wide) in paragraph at lines 614--614
+Overfull \hbox (20.18307pt too wide) in paragraph at lines 617--617
  []        \OT1/cmtt/m/n/12 require(!player1Ready || !player2Ready, "Ya hay dos
  jugadores");[] 
  []
 
 
-Overfull \hbox (69.5831pt too wide) in paragraph at lines 614--614
+Overfull \hbox (69.5831pt too wide) in paragraph at lines 617--617
  []    \OT1/cmtt/m/n/12 // 2. que cuando un jugador revele el otro no lo haga p
 orque sabe que perdio[] 
  []
 
 
-Overfull \hbox (57.2331pt too wide) in paragraph at lines 614--614
+Overfull \hbox (57.2331pt too wide) in paragraph at lines 617--617
  []        \OT1/cmtt/m/n/12 require(player1Ready && player2Ready, "No hay ningu
 n juego en curso");[] 
  []
 
 
-Overfull \hbox (223.95818pt too wide) in paragraph at lines 614--614
+Overfull \hbox (223.95818pt too wide) in paragraph at lines 617--617
  []        \OT1/cmtt/m/n/12 //si algun jugador ya revelo y el otro hizo guess p
 ero no revelo damos como ganador al que revelo[] 
  []
 
 [14]
-Overfull \hbox (211.60817pt too wide) in paragraph at lines 614--614
+Overfull \hbox (211.60817pt too wide) in paragraph at lines 617--617
  []        \OT1/cmtt/m/n/12 //si uno guessea y el otro no al pasarse el limite 
 tiene la oportunidad de recuperar sus fondos[] 
  []
 
 
-Overfull \hbox (285.7082pt too wide) in paragraph at lines 614--614
+Overfull \hbox (285.7082pt too wide) in paragraph at lines 617--617
  []        \OT1/cmtt/m/n/12 //si ambos guessean pero ninguno revela o ninguno g
 uessea el contrato se queda los fondos para penalizarlos[] 
  []
 
 [15]
-Underfull \hbox (badness 10000) in paragraph at lines 620--621
+Underfull \hbox (badness 10000) in paragraph at lines 623--624
 
  []
 
@@ -832,11 +832,11 @@ Package rerunfilecheck Info: File `Blockchains_HW2.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 16119 strings out of 474222
- 248433 string characters out of 5748734
+ 16123 strings out of 474222
+ 248464 string characters out of 5748734
  1937975 words of memory out of 5000000
  37832 multiletter control sequences out of 15000+600000
- 596303 words of font info for 277 fonts, out of 8000000 for 9000
+ 596503 words of font info for 280 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,10n,79p,1012b,926s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></us
@@ -848,10 +848,10 @@ t/fonts/type1/public/mathpazo/fplmri.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/fpl/fplrc8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/pala
 tino/uplb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplr8a.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on Blockchains_HW2.pdf (16 pages, 274939 bytes).
+Output written on Blockchains_HW2.pdf (16 pages, 275234 bytes).
 PDF statistics:
- 169 PDF objects out of 1000 (max. 8388607)
- 127 compressed objects within 2 object streams
+ 171 PDF objects out of 1000 (max. 8388607)
+ 129 compressed objects within 2 object streams
  42 named destinations out of 1000 (max. 500000)
  67078 words of extra memory for PDF output out of 74296 (max. 10000000)
 

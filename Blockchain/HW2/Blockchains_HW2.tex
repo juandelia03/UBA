@@ -307,28 +307,31 @@ pay more gas than the other and why.
 
 \begin{solution} %Uncomment and type your solution here
   Direccion del contrato que deployee y donde hice las transacciones: 0x8b520161Bc8F1afA1d978BBdbfBe9B20B95eC7A4
-  El costo desplegar el contrato fue 0.00238691 eth. tx: 
+  Para desplegar el contrato se uso 1,591,279 gas tx: 
   
   0x8eaddb2abb71825b4345876ae9b701860858f81c9962c4dfb3711b79ed913d5f.
 
-  Se ve que el costo de hacer withdraw es el menos significativo de todos. Simplemente reescribe el balance de quien 
-  la invoca.
+  Se ve que el costo de hacer withdraw es el menos significativo de todos (28,780 gas). 
+  Simplemente reescribe el balance de quien la invoca.
 
 
-  Los join, la primera vez de cada jugador, tienen las fees mas caras porque deben agregar su struct al mapping.
+  Los join, la primera vez de cada jugador, tienen los mayores costos de gas porque deben agregar su struct al mapping. Costaron 66,508
+  y 93,942 de Gas respectivamente. El segundo join consume gas extra porque hace lo mismo que el primero y finalmente setea la
+  deadline.  
 
   Guess y Reveal tiene un costo similar pero hay una particularidad. Guess siempre realiza las misma operaciones, actualizan
   el flag guessed y el hash que se va a guardar en el struct correspondiente. Por eso los llamados de ambos jugadores van
-  a tener siempre un costo muy similar o igual. En cambio con reveal cuando el primer jugador la ejecuta solo se actualiza el
+  a tener siempre el mismo consumo de gas (52,396 gas). En cambio con reveal cuando el primer jugador la ejecuta solo se actualiza el
   flag revealed de ese jugador y se marca su eleccion (un boolean), por eso esa operacion cuesta incluso menos que el guess que
   escribe un bytes32. Pero cuando el segundo jugador hace reveal, ademas de hacer lo que hace el primero, actualiza el balance
   del ganador y resetea todas las variables para dar inicio a un juego nuevo. Es por eso que ese llamado resulta algo mas caro.
+  Los costos son 37,497 gas y 63,132 gas respectivamente.
 
-  En ese sentido el contrato no es del todo justo con el jugador que revele la segunda vez, pero tampoco implica un costo 
-  muy grande. El segundo jugador en general usa un poco mas de gas.
+  Por las implementaciones de reveal y join el contrato no es del todo justo. El jugador que revele la segunda vez usa mas gas gas que el primero 
+  y el jugador que se une segundo usa mas gas que el que se une primer 
 
-  La otra diferencia en consumo de gas es la del ganador. Como el es el responsable de retirar los fondos va a pagar una
-  fee extra. Igualmente esto pareceria lo justo porque alguien debe pagar esa fee para que el reciba los fondos. Si esto 
+  La otra diferencia en consumo de gas es la del ganador. Como el es el responsable de retirar los fondos va a pagar un
+  costo extra. Igualmente esto pareceria lo justo porque alguien debe pagar esa fee para que el reciba los fondos. Si esto 
   no fuera asi  (por ejemplo en un esquema de push) quiza el otro jugador pagaria la fee para que el primero reciba su pago,
   lo que no pareceria del todo justo. 
 
@@ -336,7 +339,7 @@ pay more gas than the other and why.
   push cada vez que terminaba un juego se hubiera gastado una fee, aca un jugador puede jugar muchas veces y hacer un unico withdraw
       
 
-  Las transacciones a las que me refiero estan en el inciso e.
+  Las transacciones a las que me refiero estan en el inciso e) o en \href{https://sepolia.etherscan.io/address/0x8b520161bc8f1afa1d978bbdbfbe9b20b95ec7a4}{sepolia etherscan}
 
 \end{solution}
 
