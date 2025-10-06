@@ -54,7 +54,7 @@ run(){
 
 start(){
         xhost +local:docker
-        run "docker run --rm --name ros2_robotica --shm-size=256m -v <PATH ABSOLUTO>:/root/ros2_ws/src/robotica --env DISPLAY=$DISPLAY --volume /tmp/.X11-unix:/tmp/.X11-unix:rw --env QT_X11_NO_MITSHM=1 -it -d ros2_robotica "
+        run "docker run --rm --name ros2_robotica --shm-size=256m -v /home/juanchi/Escritorio/UBA/Robotica/talleres:/root/ros2_ws/src/robotica --env DISPLAY=$DISPLAY --volume /tmp/.X11-unix:/tmp/.X11-unix:rw --env QT_X11_NO_MITSHM=1 -it -d ros2_robotica "
   # -it is for having an interactive terminal, and -d is enable reenter after closing the terminal
 }
 

@@ -29,8 +29,8 @@ PioneerOdometry::PioneerOdometry() : Node("nodeOdometry"), x_(0), y_(0), theta_(
 void PioneerOdometry::on_velocity_cmd(const geometry_msgs::msg::Twist::SharedPtr twist)
 {
   /** Completar los mensajes de velocidad vLeft y vRight*/
-  double velocidad_adelante = twist.linear.x;
-  double velocidad_angular = twist.angular.z;
+  double velocidad_adelante = twist->linear.x;
+  double velocidad_angular = twist->angular.z;
 
   double vLeft = (velocidad_adelante - velocidad_angular * WHEEL_BASELINE) / WHEEL_RADIUS;
   double vRight = (velocidad_adelante + velocidad_angular * WHEEL_BASELINE) / WHEEL_RADIUS;
@@ -73,14 +73,14 @@ void PioneerOdometry::on_encoder_ticks(const robmovil_msgs::msg::EncoderTicks::S
   // para calcular cada delta necesito d_izq/der considerando G=1
 
   // pi * D * delta alpa / N
-  double d_izq = M_PI * (WHEEL_RADIUS * 2) * (delta_ticks_left) / ENCODER_TICKS;
-  double d_der = M_PI * (WHEEL_RADIUS * 2) * (delta_ticks_right) / ENCODER_TICKS;
+  double d_izq = M_PI * (WHEEL_RADIUS * 2) * (delta_ticks_left / ENCODER_TICKS);
+  double d_der = M_PI * (WHEEL_RADIUS * 2) * (delta_ticks_right / ENCODER_TICKS);
 
   double delta_theta = (d_der - d_izq) / (2 * WHEEL_BASELINE);
 
   double d = (d_izq + d_der) / 2;
 
-  // ACA USO EL TETHA VIEJO ????? cuanto pudo haber rotado en una vuelta de encoder
+  // ACA USO EL theta_ ????? cuanto pudo haber rotado en una vuelta de encoder, es aproximado aparte
   double delta_x = d * cos(theta_);
   double delta_y = d * sin(theta_);
 
@@ -106,8 +106,7 @@ void PioneerOdometry::on_encoder_ticks(const robmovil_msgs::msg::EncoderTicks::S
 
   tf2::Quaternion q;
 
-  // QUE PONGO ACA
-  q.setRPY(0, 0, 0); // roll, pitch, yaw
+  q.setRPY(0, 0, theta_); // roll, pitch, yaw
   msg.pose.pose.orientation = tf2::toMsg(q);
 
   msg.twist.twist.linear.x = d / delta_t; // velocidad es distancia sobre tiempo no?
