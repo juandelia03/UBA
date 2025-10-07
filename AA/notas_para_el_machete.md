@@ -51,3 +51,6 @@ Bagging:
 Problema: los árboles están muy correlacionados -> RF
 
 Para reducir la varianza no basta solo con agregar modelos, hay que disminuir su correlación.
+
+Out-of-bag: Obtener estimaciones de qué tan bien generalizan los modelos.
+Para cada instancia, utilizar los árboles que no contienen a x en su conjunto de entrenamiento para predecir la clase de x (usa como ensamble todos los árboles que no usaron x al entrenarse). Permite probar al modelo a medida que se entrena y no requiere tanto cómputo (en comparación a CV).
