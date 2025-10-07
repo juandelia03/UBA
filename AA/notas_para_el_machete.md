@@ -23,4 +23,11 @@ sesgo QDA : igual a LDA pero una matriz de cov por clase
 - Presicion: De las instancias predichas como positivas ¿qué porcentaje lo eran?
 - Recall: De las instancias positivas, ¿qué porcentaje fueron predichas como tal?
 
+- MSE
+- MAE
+- $R^2$
+
 anotar las fórmulas de c/u y la de $F_\beta$
+
+pasos para hacer la AUC-ROC. Fórmula TPR y FPR
+algo de precision-recall curve?
