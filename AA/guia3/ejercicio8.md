@@ -2,7 +2,9 @@
 
 ### (a) ¿Cuál el sesgo inductivo del algoritmo que construye el árbol de decisión?
 
-No se? 
+El más importante creo que es que separa el espacio en hiperrectángulos.
+
+Sumo: Los atribs más importantes quedan arriba (greedy), criterio de parada (h max), como se elige el mejor atributo.
 
 ### (b) ¿Qué sucede cuando dos atributos empatan en ganancia de información? ¿Esta decisión es parte del sesgo inductivo?
 

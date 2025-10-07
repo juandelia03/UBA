@@ -31,3 +31,23 @@ anotar las fórmulas de c/u y la de $F_\beta$
 
 pasos para hacer la AUC-ROC. Fórmula TPR y FPR
 algo de precision-recall curve?
+
+## G7 Sesgo varianza:
+
+Fórmulas de sesgo y varianza y sus definiciones en palabras.
+overfit -> varianza alta
+underfit -> sesgo alto
+
+## Ensambles
+
+Bootrap: Dado un dataset, crear otros (B) del mismo tamaño con instancias (filas) elegidas al azar (con reposición)
+
+Bagging:
+
+- Tomar muchos training sets distintos (Bootrap)
+- construir un modelo por cada set
+- promediar las predicciones para hacer la predicción final
+
+Problema: los árboles están muy correlacionados -> RF
+
+Para reducir la varianza no basta solo con agregar modelos, hay que disminuir su correlación.
