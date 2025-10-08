@@ -2,7 +2,8 @@
 
 ### (a) El objetivo de construir un árbol de decisión es crear el árbol de menor tamaño posible en el cual las hojas contengan valores de una sóla clase.
 
-Falso. Es greedy
+Falso. Es greedy (pienso: el objetivo igual creo que es que sea de tamaño minimo, algoritmicamente no hacemos eso
+porque es np-completo).
 
 ### (b) Los algoritmos de construcción vistos (CART, ID3, etc) exploran todos los posibles árboles y se quedan con el que mejor separa a las instancias.
 

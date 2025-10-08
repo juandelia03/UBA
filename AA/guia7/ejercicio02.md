@@ -8,7 +8,7 @@ entre un valor dado y el promedio.
 Si tengo un modelo con mucha varianza por ejemplo un árbol de altura máxima, no va a reducir la varianza darle más datos.
 
 Podría ser verdadero si lo pienso como: Si tengo pocos datos capaz el modelo hace predicciones
-muy distintas para casos correlacionados pero el patrón que las "linkea". Aumentando la cantidad de datos capaz aprende patrones que hace que haga prediciones mas razonables así bajando el sesgo.
+muy distintas para una misma instancia para datasets distintos porque no llega a aprender algún patrón. Aumentando la cantidad de datos capaz aprende patrones que hace que haga prediciones mas razonables así bajando el sesgo.
 
 ### (b) Aumentar la cantidad de datos suele ayudar a contrarrestar problemas de sesgo.
 
