@@ -1,8 +1,30 @@
-## G1
+## G3 Árboles
 
-## G2
+Medidas de homogeneidad:
 
-...
+- Tasa de error de clasificación (Classification Error Rate)
+- Ganancia Gini (Reducción de la impureza)
+- S:región, H(S): entropia en S, <atrib,corte> y prop: proporción
+
+  $InfoGain(S, <a,c>) = H(S) - (prop_{\leq} \cdot H(S_{\leq}) + prop_{>} \cdot H(S_{>}))$
+
+  $H(S) = - \sum_{k \in clases(S)}{p(k) log_2 p(k)}$
+
+sesgo árboles:
+
+- El tipo de regiones de decisión que puede generar tiene forma de (hiper-)rectángulos.
+- Las regiones que exploramos se determinan de manera Greedy.
+- Atributos más discriminativos -> cerca de la raíz.
+- Árboles más pequeños y menos complejos en términos de su estructura de acuerdo al criterio de parada
+- De acuerdo a cómo se recorren los distintos cortes para un atributo dado, se pueden perder soluciones
+
+Probas de pertencer a una clase: Por ejemplo si en una hoja quedaron 2 instancias de la clase A y 8 de la clase B tenemos A: 20% y B: 80%.
+
+Si hacemos árbol para regresión el algo es el mismo. Distinta medida para homogeneidad (Varianza reg).
+El valor de una hoja es el promedio de las etiquetas de la región.
+
+Importancia: Cada vez que se use un atributo para realizar un corte sumarle a ese atributo la
+ganancia (gini/info) de ese corte ponderado por cuantas instancias tenía el nodo .
 
 ## G5 clasificadores
 
