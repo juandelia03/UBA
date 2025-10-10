@@ -32,8 +32,8 @@ void PioneerOdometry::on_velocity_cmd(const geometry_msgs::msg::Twist::SharedPtr
   double velocidad_adelante = twist->linear.x;
   double velocidad_angular = twist->angular.z;
 
-  double vLeft = (velocidad_adelante - velocidad_angular * WHEEL_BASELINE) / WHEEL_RADIUS;
-  double vRight = (velocidad_adelante + velocidad_angular * WHEEL_BASELINE) / WHEEL_RADIUS;
+  double vLeft = (velocidad_adelante - velocidad_angular * (WHEEL_BASELINE / 2.0)) / WHEEL_RADIUS;
+  double vRight = (velocidad_adelante + velocidad_angular * (WHEEL_BASELINE / 2.0)) / WHEEL_RADIUS;
 
   // publish left velocity
   {
@@ -73,10 +73,10 @@ void PioneerOdometry::on_encoder_ticks(const robmovil_msgs::msg::EncoderTicks::S
   // para calcular cada delta necesito d_izq/der considerando G=1
 
   // pi * D * delta alpa / N
-  double d_izq = M_PI * (WHEEL_RADIUS * 2) * (delta_ticks_left / ENCODER_TICKS);
-  double d_der = M_PI * (WHEEL_RADIUS * 2) * (delta_ticks_right / ENCODER_TICKS);
+  double d_izq = M_PI * (WHEEL_RADIUS * 2) * ((double)delta_ticks_left / ENCODER_TICKS);
+  double d_der = M_PI * (WHEEL_RADIUS * 2) * ((double)delta_ticks_right / ENCODER_TICKS);
 
-  double delta_theta = (d_der - d_izq) / (2 * WHEEL_BASELINE);
+  double delta_theta = (d_der - d_izq) / WHEEL_BASELINE;
 
   double d = (d_izq + d_der) / 2;
 
