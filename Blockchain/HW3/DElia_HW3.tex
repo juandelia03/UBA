@@ -180,15 +180,16 @@ for a total of \numpoints \ points.
         \end{itemize}
 
      \end{solution}
-    
+
             \part[3] Describe the purpose of a {\em coinbase} transaction. 
             
     \begin{solution} %Uncomment and type your solution here
-        (Referencia whitepaper de Nakamoto 6.Incentive)
 
         La transaccion coinbase es la primera de cada bloque y representa la recompensa que se le va
         a pagar a quien mine el bloque. Esta transaccion crea bitcoins, sirve no solo como recompensa sino 
         como forma de poner moneda en circulacion, ya que no hay una autoridad central que lo haga.
+
+
     \end{solution}
 
             \end{parts}
@@ -202,21 +203,84 @@ for a total of \numpoints \ points.
 
 \part[5] Describe the purpose and implementation of the {\bf 2x1 PoW} technique.
 
-     %\begin{solution} %Uncomment and type your solution here
+     \begin{solution} %Uncomment and type your solution here
+        La idea de implementar 2x1 PoW es lograr consenso soportando $\frac{1}{2}$ de nodos deshonestos, a diferencia de
+        las soluciones que vimos que toleraban $\frac{1}{3}$.
         
-    %\end{solution}
+        Conceptualmente el problema es que el "backbone protocol" no asegura sufiente chain-quality. No sabemos si 
+        suficientes bloques provienen de nodos honestos.
+        
+        Para garantizar que la cantidad de transacciones sea equivalente al "hashing power" de cada uno se puede implementar
+        PoW para "minar" transacciones. Va a haber un doble proceso de mineria, uno para generar bloques y otro para 
+        insertar transacciones. Asi soporta hasta un poder de hashing menor a $\frac{1}{2}$ de los participantes maliciosos.
+
+
+        En lineas generales se divide en dos etapas:
+        
+        \begin{itemize}
+            
+            \item{Operation: En cada ronda las "parties" corren dos protocolos en paralelo. El primero es $\Pi_{PL}$ 
+            que mantiene el ledger de transacciones y requiere q queries al oraculo $H_0(.)$. El segundo proceso
+            es el de "transaction production $\Pi_{tx}$" que continuamente genera transacciones que satisfecen
+            $(H_1(ctr,G(nonce,v)) < T ) \land (ctr \leq q)$ El protocolo hace q queries a $H_1(.)$}
+            
+            \item{Termination: Despues de la ronda L, una partie recolecta todas las transacciones unicas que hay
+            en los primeros $O(k)$ bloques y retorna el valor que mas aparece de entre las transacciones}
+
+        \end{itemize}
+
+        El problema de tener dos subprocesos es que un adversario podria mover su poder de computo de uno al otro.
+
+        Este protocolo que usa dos subprocesos de PoW se puede juntar en un unico proceso que usa un unico oraculo
+        $H(.)$ con un total de q queries por ronda. Se puede conseguir cambiando la estructura de los PoWs de pares
+        de la pinta $\langle w, ctr\rangle$ a $\langle w,ctr,label \rangle$
+
+        A grandes rasgos es como el algoritmo que conocemos de PoW pero en cada iteracion verifica si resolvio una PoW y/o la otra
+        para un mismo target. Cuando verifica si H(ctr,h) es menor al Target lo hace tanto para ese hash como para el reverso. De esta manera verifica
+        dos PoW \textbf{independientes} en un unico intento.
+
+        (El algoritmo esta en la pagina 36 de The Bitcoin Backbone Protocol: Analysis and Applications)
+     
+    \end{solution}
 
 \part[7] Let $T_1$ and $T_2$ be the target values in 2x1 PoW, and $\kappa$ the size of the hash function's output. What relation should they satisfy for the technique to work? Elaborate.
 
-    %\begin{solution} %Uncomment and type your solution here
-        
-    %\end{solution}
+    \begin{solution} %Uncomment and type your solution here
+        Tiene que valer que $T_1 = T_2 = T$ y $t > k/2$ tomando:
+
+        Sea $U$ una variable aleatoria uniforme en el rango sobre los enteros $[0, 2^k)$ y $T$ un entero tal que: $T = 2^t$.
+        Para $t > k/2$ los eventos $U < T$ y $[U]^R < T$ son independientes y ambos tienen probabilidad $T \cdot 2^{-k}$  
+
+        U y su reverso son los hashes que explique en el inciso anterior que buscamos para el mismo Target
+
+        Dem:
+
+        Se puede ver que cada evento sucede con probabilidad $T \cdot 2^{-k}$. La conjuncion de los eventos es
+        elegir un entero U tal que $U < T$ y $U^R < T$. Como $T = 2^t$ la probabilidad condicional de $U < T$ deja 
+        los t bits menos significativos de U de manera unifomemente aleatoria y fija el resto de los $\kappa - t$ bits.
+
+        El caso para  $U^R$ es análogo. Quedan los t bits mas significativos de manera uniformemente aleatoria y los $\kappa - t$
+        restantes quedan fijos.
+
+        El evento $U^R < T$ tiene probabilidad $2^{t-(k-t) / 2^t} = T \cdot 2^{-k}$ en el espacio condicional, asi
+        que ambos eventos son independientes.
+
+
+    \end{solution}
     
   \part[8] Design and argue correctness of an $\ell$x1 PoW scheme. Note that such a scheme would enable an $\ell$-parallel blockchain. What properties of the blockchain or ledger application would, if any,  benefit from a parallel blockchain? Elaborate.
   
-   %\begin{solution} %Uncomment and type your solution here
+   \begin{solution} %Uncomment and type your solution here
+        \textbf{CONSULTAR}
+
+        Idea: l tiene que ser multiplo de 2. De esa manera se pueden correr l/2 blockchains. (tengo l/2 ledgers???).
+        Cada uno creo que que mantiene las propiedades que tendria una individual, consistency, liveness.
         
-    %\end{solution}
+        En una sola rona se podrian minar hasta l/2 bloques por ronda asi que se beneficiaria la propiedad de chain growth.
+        Como cada cadena individual cumple las propiedades originales es un esquema correcto teoricamente.
+
+        Problemas?: como mantengo independencia entre cada una?
+    \end{solution}
     
     \end{parts}
     
@@ -228,9 +292,9 @@ for a total of \numpoints \ points.
 
 \part[5] What should be the assumption on the adversarial computational power (similar to the ``Honest Majority Assumption'') for Strong Validity to hold?
 
-    %\begin{solution} %Uncomment and type your solution here
-        
-    %\end{solution}
+    \begin{solution} %Uncomment and type your solution here
+        Pagina 37 del paper
+    \end{solution}
 
 \part[5]  State and prove the Strong Validity lemma.
 
