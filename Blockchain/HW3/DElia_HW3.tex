@@ -236,7 +236,9 @@ for a total of \numpoints \ points.
         de la pinta $\langle w, ctr\rangle$ a $\langle w,ctr,label \rangle$
 
         A grandes rasgos es como el algoritmo que conocemos de PoW pero en cada iteracion verifica si resolvio una PoW y/o la otra
-        para un mismo target. Cuando verifica si H(ctr,h) es menor al Target lo hace tanto para ese hash como para el reverso. De esta manera verifica
+        para un mismo target. Cuando verifica si H(ctr,h) es menor al Target lo hace tanto para ese hash como para el reverso 
+        (Una Pow para minar bloques y otra PoW para transacciones)
+        .De esta manera verifica
         dos PoW \textbf{independientes} en un unico intento.
 
         (El algoritmo esta en la pagina 36 de The Bitcoin Backbone Protocol: Analysis and Applications)
