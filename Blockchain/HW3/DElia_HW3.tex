@@ -140,43 +140,51 @@ for a total of \numpoints \ points.
             \item{Nuevas transacciones son transmitidas en la red a los nodos.}
             \item{Cada nodo recolecta transacciones para formar un bloque, sumando la public key a donde se debe enviar el coinbase.}
             \item{Cada nodo intenta resolver el PoW para el target correspondiente}
-            \item{Cuando un nodo encuentra una PoW transmite el bloque en la red para todos los nodos}
+            \item{Cuando un nodo encuentra una PoW transmite el bloque en la red para todos los nodos (la primera tx es la coinbase)}
             \item{Los nodos de la red aceptan el bloque si todas las transacciones son validas usando las merkle root y verificando
             que no haya double spending}
             \item{Los nodos expresan su aceptacion de un bloque poniendose a crear el siguiente bloque de la cadena, usando
             como "hash del bloque anterior" el hash del bloque que aceptan}
         \end{enumerate}
 
-        No es necesario cambiar Consistency (Everyone sees the same history) ni Liveness (Everyone can add new transactions). Ambas
-        tienen sentido en el contexto del mecanismo real de bitcoin. Por como funciona el mecanismo la idea es que mediante PoW 
-        se mantenga la persistencia de las transacciones, ya que se extienden las cadenas donde se usa "esfuerzo" si la mayoria
-        de los nodos son honestos todos van a ver la misma cadena, o al menos el mismo prefijo (los ultimos bloques son mas volatiles).
+        No es necesario cambiar Consistency (If an honest miner reports a transaction tx in a block that is “deep enough” 
+        in the ledger, then tx will be reported in the same position by any honest miner in  
+        the same position in the ledger, from this round round on) 
+        ni Liveness (If all honest miners attempt to insert a transaction in the ledger, then, after u rounds, 
+        all honest miners will report it as stable). Ambas tienen sentido en el contexto del mecanismo 
+        real de bitcoin. Por como funciona el mecanismo la idea es que mediante PoW se mantenga la persistencia 
+        de las transacciones, ya que se extienden las cadenas donde se usa "esfuerzo" si la mayoria
+        de los nodos son honestos todos van a ver la misma cadena, o al menos el mismo prefijo 
+        (los ultimos bloques son mas volatiles).
 
-        Tampoco hace falta cambiar Liveness (Everyone can add new transactions). Cualqueira puede emitir transacciones en la red.
+        Tampoco hace falta cambiar Liveness. Cualqueira puede enviar transacciones en la red y van a ser eventualmente incluidas.
         
-        No nos interesa cambiar la idea de las funciones. Por como estan definidos en el paper seccion 3.1 sirven
-        para expresar la esencia del mecanismo:
+        No nos interesa cambiar la idea de las funciones, sirven para expresar la esencia del mecanismo:
 
         \begin{itemize}
-            \item{V: The content validation predicate receives as input the
-            content of a chain C, denoted by xC, and will return 1 if and only if the contents are consistent
-            with the intended application implemented on top of the chain.
+            \item{V: $V(\langle x_1, ... , x_m \rangle)$ is true if and only if the vector $V(\langle x_1, ... , x_m \rangle)$
+            is a valid ledeger. $V(\langle x_1, ... , x_m \rangle) \in L$
             
-            Esto nos intteresa hacerlo, lo hacen los nodos de la red cuando verifican que todas la transacciones de la cadena
-            sean validas  con las merklee root y que no haya double spending.
+            Esto nos intteresa hacerlo. Los nodos de la red cuando verifican que todas la transacciones del ledger
+            sean validas con las merklee root, verificando que no haya double spending, verificando que las firmas sean validas
+            y que quienes hayan hecho transacciones tengan los fondos suficientes.
             }
-            \item{I: It receives as input a tuple, (st, C, round, Input(), Receive()),
-            that stands respectively for state data st, current chain C, current round round, contents of
-            input tape Input() and contents of network tape Receive(). Given these, it will produce
-            an updated state st' as well as an input x that should be the next input to be inserted in a
-            block. For instance, I(·) can be as simple as copying the contents of the input tape into x
-            and keeping st = $\epsilon$ , or performing a more complex operation that involves parsing C or even
-            maintaining old input values that have not yet been processed as part of the state st.}
-
-            \item{R: It receives as input a chain C and provides an interpretation of it. 
-            In the simplest case it can be just returning xC and leaving it to the callee to process the contents of the chain.
             
-            Nos interesa, en la aplicacion de blockchain cumple el proposito de listar las transacciones de los bloques.}
+            \item{R: If $V(\langle x_1, ... , x_m \rangle) = $ True, the value $R(C)$ is equal to 
+            $V(\langle x_1, ... , x_m \rangle)$; undefined otherwise.  
+            
+            Nos interesa, en la aplicacion de blockchain cumple el proposito de listar las transacciones de los bloques.
+            }
+
+            \item{I: $I(st,C,round,INPUT())$ operates as follows: if the input tape contains (Insert, v), 
+            it parses v as a sequence of transactions and retains the largest subsequence $x' \leq v$ 
+            that is valid with respect to $x_C$ (and whose transactions are not already included in $x_C$ ).
+            Finally, $x = tx_0 x'$ where $tx_0$ is a neutral random nonce transaction. The state st remains always $\epsilon$.
+            
+            En este paso la definicion tambien es parecida y nos importa esta funcionalidad. Describe que selecciona
+            un conjunto de transacciones, habria que agregar que agrega la coinbase.
+
+            }
         \end{itemize}
 
      \end{solution}
@@ -273,15 +281,18 @@ for a total of \numpoints \ points.
   \part[8] Design and argue correctness of an $\ell$x1 PoW scheme. Note that such a scheme would enable an $\ell$-parallel blockchain. What properties of the blockchain or ledger application would, if any,  benefit from a parallel blockchain? Elaborate.
   
    \begin{solution} %Uncomment and type your solution here
-        \textbf{CONSULTAR}
 
-        Idea: l tiene que ser multiplo de 2. De esa manera se pueden correr l/2 blockchains. (tengo l/2 ledgers???).
-        Cada uno creo que que mantiene las propiedades que tendria una individual, consistency, liveness.
-        
-        En una sola rona se podrian minar hasta l/2 bloques por ronda asi que se beneficiaria la propiedad de chain growth.
-        Como cada cadena individual cumple las propiedades originales es un esquema correcto teoricamente.
+        Con un  $\ell$x1 PoW scheme se podrian hacer $\ell$ PoW's en paralelo, si queremos seguir con un esquema como el de 2x1
+        donde hay que hacer PoW para transacciones y bloques, esto implicaria que podriamos hacer $\ell / 2$ de PoW para bloques
+        y $\ell / 2$ de PoW para transacciones. 
 
-        Problemas?: como mantengo independencia entre cada una?
+        De esta manera se beneficiaria la propiedad de chain-growth ya que por cada ronda se podrian minar mas bloques. 
+        Tambien se beneficiaria liveness ya que tambien se minarian mas transacciones por bloque y sin perder 
+        chain-quality ya que mantenemos el esquema de 2x1. 
+
+        La correctitud de este esquema es igual al de 2x1, con un unico target podriamos definir eventos disjuntos tal que 
+        un atacante no pueda usar mas computo del que tiene a disposicion para hacer una PoW.
+
     \end{solution}
     
     \end{parts}
@@ -357,9 +368,52 @@ You should provide:
 %\item How did you link the library to your contract?
 \end{tiret}
 
-    %\begin{solution} %Uncomment and type your solution here
-        
-    %\end{solution}
+    \begin{solution} %Uncomment and type your solution here
+        Mis variables internas son las siguientes:
+            \begin{itemize}
+                \item{owner: Esta varible de tipo address payable sirve para guardar la address de quien es propietario
+                del contrato. Es necesario tener este registro ya que es el unico que puede mintear tokens y destruir el contrato.}
+                \item{supply: Un uint256 que guarda cuantos tokens hay actualmente en circulacion. Es necesario para totalSupply()
+                y es un uint256 porque es el tipo de dato que retorna la funcion.}
+                \item{name y symbol: son strings necesarios para guardar el nombre y simbolo del contrato para usar en getName() y
+                getSymbol() respectivamente.}
+                \item{price: Un uint128 que es necesario para la funcion getPrice(). Se usa en sell por ejemplo para calcular
+                cuanto eth enviarle a un usuario que vende sus tokens. Su precio es fijo.}
+                \item{balances: Es un mapping de address a uint256 para llevar el registro de cuantos tokens tiene cada usuario.}
+            \end{itemize}
+            
+            No hay una manera directa de comprar tokens, la API dice que solo el owner puede mintear tokens y enviarlos
+            a los usuarios y no hay ninguna funcion de compra implementada. Podria haber un proceso de compra paralelo entre 
+            los usuarios pero de eso no se encarga el contrato. La venta si esta en la API, un usuario puede ejecutar sell 
+            y vender sus tokens a 600 wei cada uno (siempre que el contrato tenga fondos!).
+
+            El precio del token esta fijo en el contrato, si un usuario quiere venderlo va a poder hacerlo por 600 wei.
+
+            Los usuarios pueden acceder a su balance usando la funcion balanceOf(address account) que retorna el balance
+            de la address ingresada.
+            
+            
+            El modo de uso seria algo asi: 
+            \begin{itemize}
+                \item{Se crea el contrato con un owner (el constructor es payable asi que lo puede inicializar con eth).}
+                \item{Los datos del contrato son conocidos: nombre, simbolo, suministro.}
+                \item{Solo el owner puede crear tokens, otorgandoselos a todo usuario que el quiera.}
+                \item{Los usuarios pueden transferirse esos tokens todo lo que quieran entre ellos.}
+                \item{Los usuarios pueden vender sus tokens en el contrato 
+                a cambio de eth siempre que el contrato tenga los fondos suficientes.}
+                \item{El contrato puede recibir eth mediante fallback que es payable.}
+                \item{Solo owner puede destruir el contrato, recibiendo todos los eth que se encuentren dentro.}
+            \end{itemize}
+
+            Nota: En el codigo hay un require comentado en la funcion mint que obliga al contrato a tener eth suficientes
+            para respaldar esos tokens para intercambiarse por el eth equivalente. Esa seria una forma de hacer que 
+            todo usuario que tenga token sepa que lo va poder vender por su equivalente en eth. Como la consigna
+            dice "implement the above API exactly as specified" y no dice nada al respecto lo deje comentado. 
+            No tener esta precaucion no necesariamente esta mal, funciona como un banco que quiza no tiene toda la liquidez necesaria
+            para otorgar a los clientes. Pero si quisieramos el comportamiento mencionado bastaria con descomentar 
+            el require en la funcion de mint. (Puede pasar que aunque el contrato tenga mucho eth de repente muchos
+            usuarios quieran retirar sus tokens y no alcancen los eth para todos)
+    \end{solution}
 
 \part[5] A detailed gas evaluation of your implementation, including:
 \begin{tiret}
@@ -376,9 +430,22 @@ You should provide:
 contract and a detailed analysis of the security mechanisms that can mitigate these
 hazards.
 
-    %\begin{solution} %Uncomment and type your solution here
-        
-    %\end{solution}
+    \begin{solution} %Uncomment and type your solution here
+        Voy a listar algunos posibles peligros que fui encontrando y como los mitigue:
+        \begin{itemize}
+            \item{Re-entrancy: En sell use transfer que deberia ser segura en este sentido. 
+            Ademas antes de enviar los eth correspondientes reste los tokens correspondientes al usuario y antes
+            de transferir se verifica que el balance de tokens sea mayor a la cantidad a vender, asi 
+            que aunque llegara a haber reentrancy es seguro.}
+            \item{Privilegios: Necesitamos que solo el owner pueda mintear y destruir el contrato. Para que no lo
+            pueda hacer cualquiera se usan requires en mint() y close() que verifican que quien invoque 
+            a las funciones sea el owner.}
+            \item{Como menciones en el inciso a) podria no haber suficiente eth para que todos vendan sus tokens al 
+            precio indicado si todos decidieran vender a la vez. Esto no esta mitigado pero como ya explique es 
+            tan sencillo como agregar un require en mint que verifique que el eth del contrato respalde al supply total. 
+            No lo considero una vulnerabilidad pero si es algo a tener en cuenta si se quisiera un comportamiento diferente}
+        \end{itemize}
+    \end{solution}
 
 \part[5] The transaction history of the deployment of and interaction with your contract.
 
