@@ -9,7 +9,6 @@ contract Token {
     uint128 price = 600 wei;
 
     mapping(address => uint256) private balances;
-    //en el constructor: supply, name, owner, symbol, price
 
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Mint(address indexed to, uint256 value);
