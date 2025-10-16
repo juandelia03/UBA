@@ -331,10 +331,6 @@ for a total of \numpoints \ points.
         Para que valga strong validity, sea $v_i$ el valor mayoritario en la cadena, algun participante honesto debe 
         haber elegido $v_i$. Veamoslo por absurdo:
 
-        Nota: como se esta discutiendo consenso, podemos pensar a cada bloque como el voto de un participante. Es decir
-        que si la cadena tiene longitud k, hay k votos. Si t es la cantidad de bloques/votos emitidos por participantes maliciosos
-        k-t es la cantidad de bloques/votos emitidos por participantes honestos.
-
         \begin{enumerate}
             \item{Asumamos que el output del protocolo $v_{out}$ es un valor que no fue valor inicial de ningun participante honesto}
             \item{Todos los votos (bloques con valor $v_{out}$) fueron creados por el adversario. Notamos a ese numero como $B_{malicioso}$}
@@ -480,9 +476,45 @@ You should provide:
 %\item What was the gas impact of using the deployed library instance, compared to including its code in your contract?
 \end{tiret}
 
-    %\begin{solution} %Uncomment and type your solution here
+    \begin{solution} %Uncomment and type your solution here
+        Desplegar el contrato tuvo un costo de 1,051,307 gas 
+        (\href{https://sepolia.etherscan.io/tx/0xb3e37fa5b9dfa2f19fd1f8d883833126f90ae524427002b7af2e7886667f1d96}{tx}).
+
+        Las funciones que simplemente retornan valores del contrato no consumen gas, pues simplemente es leer el estado.
+        Son totalSupply(), balanceOf(), getName(), getSymbol(), getPrice().
+
+        Transfer 
+        (\href{https://sepolia.etherscan.io/tx/0xb14fa084b1fa4469858a9ba1e899c42b582f734d6ff13e3beddda58e5551cb4e}{transaccion}):
+
+        El transfer, tuvo un costo de 52,356 gas.
+
+        Mint 
+        (\href{https://sepolia.etherscan.io/tx/0x246703608a107bad11410a6b36a929e8523ed7765c4fb36f2d237b1fab649ace}{transaccion}):
         
-    %\end{solution}
+        Tuvo un costo de 70,900 gas.
+        
+        Sell 
+        (\href{https://sepolia.etherscan.io/tx/0x2e6aa9818d2a3463667e4c7896b7e1aba24926a591bf078cced1cb33908955f7}{transaccion}):
+
+        Tuvo un costo de 43,607 gas.
+
+        Close 
+        (\href{https://sepolia.etherscan.io/tx/0xc018ec2a09ced8735b8fb0153189203bfb1d55ed1aed16a388753d251d9a0cac}{transaccion}):
+
+        Tuvo un costo de 28,598 gas. (Solo hace selfdestruct)
+
+
+        Sell fue el mas barato porque simplemente escribe valores ya existentes. Mint fue un poco mas caro que Transfer
+        porque hizo la primera escritura del mapping. Transfer y Mint en general consumen casi el mismo gas porque ambos
+        actualizan dos valores. Pueden resultar mas caras las transacciones donde se agregue un nuevo usuario al mapping
+        (como en este caso en Transfer y Mint por ser la primera vez que transaccionan dos usuarios).
+
+        Si bien sell fue la mas barata en la primera ejecucion de cada una, va a ser la mas cara siempre que transfer y Mint 
+        no agreguen usuarios al struct, pues las tres actualizan dos valores pero sell ademas hace transfer.
+        
+        Una tecnica que use para hacer mas efectivo el costo del contrato fue que el constructor sea payable, asi el owner
+        puede crear el contrato y fondearlo en una misma transaccion.
+    \end{solution}
 
 \part[5] A thorough listing of potential hazards and vulnerabilities that can occur in the smart
 contract and a detailed analysis of the security mechanisms that can mitigate these
@@ -507,9 +539,46 @@ hazards.
 
 \part[5] The transaction history of the deployment of and interaction with your contract.
 
-    %\begin{solution} %Uncomment and type your solution here
-        
-    %\end{solution}
+    \begin{solution} %Uncomment and type your solution here
+        Hice una ejecucion simple donde se crea el contrato, el owner mintea tokens para un usuario, 
+        ese usuario le envia de vuelta algunos tokens al owner, un usuario vende algunos tokens, el owner cierra el contrato.
+
+        Las respectivas transaccions:
+
+        \begin{enumerate}
+            \item{
+                \href{https://sepolia.etherscan.io/tx/0xb3e37fa5b9dfa2f19fd1f8d883833126f90ae524427002b7af2e7886667f1d96}{Despligue del contrato}
+                , tx:
+                
+                0xb3e37fa5b9dfa2f19fd1f8d883833126f90ae524427002b7af2e7886667f1d96
+                }
+            \item{
+                \href{https://sepolia.etherscan.io/tx/0x246703608a107bad11410a6b36a929e8523ed7765c4fb36f2d237b1fab649ace}{Mint}
+                , tx:
+
+                0x246703608a107bad11410a6b36a929e8523ed7765c4fb36f2d237b1fab649ace
+            }
+            \item{
+                \href{https://sepolia.etherscan.io/tx/0xb14fa084b1fa4469858a9ba1e899c42b582f734d6ff13e3beddda58e5551cb4e}{Transfer}
+                , tx: 
+                
+                0xb14fa084b1fa4469858a9ba1e899c42b582f734d6ff13e3beddda58e5551cb4e
+            }
+            \item{
+                \href{https://sepolia.etherscan.io/tx/0x2e6aa9818d2a3463667e4c7896b7e1aba24926a591bf078cced1cb33908955f7}{Sell}
+                , tx:
+                
+                0x2e6aa9818d2a3463667e4c7896b7e1aba24926a591bf078cced1cb33908955f7
+            }
+
+            \item{
+                \href{https://sepolia.etherscan.io/tx/0xc018ec2a09ced8735b8fb0153189203bfb1d55ed1aed16a388753d251d9a0cac}{Close}
+                , tx:
+
+                0xc018ec2a09ced8735b8fb0153189203bfb1d55ed1aed16a388753d251d9a0cac
+            }
+        \end{enumerate}
+    \end{solution}
 
 \part[5] The code of your contract.
 
