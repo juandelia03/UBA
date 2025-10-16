@@ -306,14 +306,72 @@ for a total of \numpoints \ points.
 \part[5] What should be the assumption on the adversarial computational power (similar to the ``Honest Majority Assumption'') for Strong Validity to hold?
 
     \begin{solution} %Uncomment and type your solution here
-        Pagina 37 del paper
+        Strong validity significa que si v es el output decidido entre las partes, v debe ser el valor 
+        inicial de alguna parte honesta. Sea V el conjunto de valores sobre los que pueden decidir las partes, 
+        la condicion que se debe cumplir para asegurar Strong validity es: 
+        
+        $$ n > |V| t$$
+
+        Se puede pensar como que la proporcion de participantes deshonestos debe ser menor a $1 / |V|$ pues:
+
+        $$ 1 / |V| > t / n $$
+        
+        Notar que si $|V| = 2$ basta con que haya una mayoria honesta.
     \end{solution}
 
 \part[5]  State and prove the Strong Validity lemma.
 
-    %\begin{solution} %Uncomment and type your solution here
+    \begin{solution} %Uncomment and type your solution here
+        \textit{Strong Validity lemma}: Sea $\Pi$ un protocolo con un conjunto de valores V que cumple las propiedades de
+        bitcoin backbone: Chain quality, chain Growth, Common Prefix. $\Pi$ cumple la propiedad de Strong Validity 
+         si $n > |V| t$.
         
-    %\end{solution}
+        Prueba:
+
+        Para que valga strong validity, sea $v_i$ el valor mayoritario en la cadena, algun participante honesto debe 
+        haber elegido $v_i$. Veamoslo por absurdo:
+
+        Nota: como se esta discutiendo consenso, podemos pensar a cada bloque como el voto de un participante. Es decir
+        que si la cadena tiene longitud k, hay k votos. Si t es la cantidad de bloques/votos emitidos por participantes maliciosos
+        k-t es la cantidad de bloques/votos emitidos por participantes honestos.
+
+        \begin{enumerate}
+            \item{Asumamos que el output del protocolo $v_{out}$ es un valor que no fue valor inicial de ningun participante honesto}
+            \item{Todos los votos (bloques con valor $v_{out}$) fueron creados por el adversario. Notamos a ese numero como $B_{malicioso}$}
+            \item {La forma minima para que el valor mayoritario sea el de los participantes maliciosos seria que los votos (valores) de
+            los honestos esten equivalentemente distribuidos para cada valor $v_j$, menos el de los maliciososo. 
+            De esta manera si el valor outputeado $v_{out}$ fue el de los maliciosos vale: 
+            $B_{maliciosos} > B_{honestos} / (|V| - 1)$} siendo $B_{honestos}$ el numero de "votos" que recibio cada valor de los honestos
+            (es igual para todos).
+            \item{Sea k la longitud de la cadena podemos reescribir 
+            
+            $B_{honestos} = k - B_{maliciosos}$ y se puede desarrollar la desigualdad descripta antes:
+
+            $B_{maliciosos} > B_{honestos} / (|V| - 1) = $
+            
+            $B_{maliciosos} > (k - B_{maliciosos}) / (|V| - 1) = $
+
+            $B_{maliciosos} \cdot (|V| - 1) > (k - B_{maliciosos}) = $
+
+            $B_{maliciosos} \cdot |V|> k$
+
+            $B_{maliciosos} / k > 1 / |V|$
+
+            \item{Por la propiedad de chain quality con $\lambda = |V|$ por la suposicion de $n > |V| t = 1 / |V| > t/n$ (es
+            decir la proporcion de maliciosos es menor a $1/|V|$) la fraccion adversarial de bloques es menor a 
+            $\mu = 1 / \lambda =  1 / |V|$:
+
+            $$B_{maliciosos} / k < 1/|V| $$
+
+            Que es absurdo, ya que se contradice con el paso 4.
+
+            
+            }
+
+            }
+        \end{enumerate}
+
+    \end{solution}
 
 \end{parts}
 
