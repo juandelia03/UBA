@@ -11,7 +11,7 @@ double lineal_interp(const rclcpp::Time &t0, const rclcpp::Time &t1, double v0, 
    * entre v0 y v1 dependiendo el tiempo trancurrido entre ambos
    * considerar que t siempre se encuentra en t0 y t1. */
 
-  double res = v0 + ((t - t0) / (t1 - t0)) * (x1 - x0);
+  double res = v0 + ((t - t0).seconds() / (t1 - t0).seconds()) * (v1 - v0);
 
   return res;
 }

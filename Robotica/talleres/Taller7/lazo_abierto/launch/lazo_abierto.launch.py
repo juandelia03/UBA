@@ -28,17 +28,26 @@ def generate_launch_description():
             parameters=[
                 {'use_sim_time': True},
                 {'stepping': 0.1},
-                {'trajectory_type': 'sin'},
+                #por default nos vino sin
+                {'trajectory_type': 'spline'},
+                #cambiar a 20 para el ejercicio 2
                 {'total_time': 50.0},
                 {'amplitude': 1.0},
+                #cambiar a 5 para el ejercicio 2
                 {'cycles': 1.0},
                 {'spline_waypoints': [
-                    0., 0., 0., 0.,
-                    100., 5., 0., 1.57,
-                    200., 5., 5., 3.14,
-                    300., 0., 5., 4.71,
-                    400., 0., 0., 0.
+                0.0, 0.0, 0.0,  0.0,   
+                30.0, 2.5, 2.0,  0.0,    
+                60.0, 5.0, 0.0,  0.0     
                 ]}
+                #los waypoints default:
+                # {'spline_waypoints': [
+                #     0., 0., 0., 0.,
+                #     100., 5., 0., 1.57,
+                #     200., 5., 5., 3.14,
+                #     300., 0., 5., 4.71,
+                #     400., 0., 0., 0.
+                # ]}
             ]
         )
     ])
