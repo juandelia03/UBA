@@ -196,7 +196,7 @@ void build_spline_trajectory(double stepping, std::vector<std::vector<double>> &
     /* COMPLETAR LOS PARÁMETROS DE LOS POLINOMIOS */
     double a0 = xa;
     double a1 = n1 * cos(thetaa);
-    double a2 = 3 * (xb - xa) - 2 * n1 * cos(thetaa) - n2 * sin(thetab);
+    double a2 = 3 * (xb - xa) - 2 * n1 * cos(thetaa) - n2 * cos(thetab);
     double a3 = -2 * (xb - xa) + n1 * cos(thetaa) + n2 * cos(thetab);
     double b0 = ya;
     double b1 = n1 * sin(thetaa);
