@@ -92,8 +92,8 @@ bool KinematicPositionController::control(const rclcpp::Time &t, double &v, doub
   double i_dy = goal_y - current_y;
 
   // y con esas calculamos las del goal (entiendo que es hay que hacer el producto de la matriz)
-  double dx = cos(-goal_a) * i_dx + sin(-goal_a) * i_dy;
-  double dy = -sin(-goal_a) * i_dx + cos(-goal_a) * i_dy;
+  double dx = cos(goal_a) * i_dx + sin(goal_a) * i_dy;
+  double dy = -sin(goal_a) * i_dx + cos(goal_a) * i_dy;
   double theta = angles::normalize_angle(current_a - goal_a);
 
   // Computar variables del sistema de control
