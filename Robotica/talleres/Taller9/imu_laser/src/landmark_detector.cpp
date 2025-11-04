@@ -12,14 +12,12 @@
 
 #define LANDMARK_DIAMETER 0.1 // metros (0.1 = 10cm)
 
-robmovil_ekf::LandmarkDetector::LandmarkDetector() :
-    Node("landmark_detector_node"), tf_buffer(this->get_clock()), tf_listener(tf_buffer), transform_received(false)
+robmovil_ekf::LandmarkDetector::LandmarkDetector() : Node("landmark_detector_node"), tf_buffer(this->get_clock()), tf_listener(tf_buffer), transform_received(false)
 {
-  laser_sub = this->create_subscription<sensor_msgs::msg::LaserScan>( "/scan", rclcpp::QoS(10), std::bind(&LandmarkDetector::on_laser_scan, this, std::placeholders::_1));
+  laser_sub = this->create_subscription<sensor_msgs::msg::LaserScan>("/scan", rclcpp::QoS(10), std::bind(&LandmarkDetector::on_laser_scan, this, std::placeholders::_1));
   landmark_pub = this->create_publisher<robmovil_msgs::msg::LandmarkArray>("/landmarks", rclcpp::QoS(10));
   pointcloud_pub = this->create_publisher<sensor_msgs::msg::PointCloud>("/landmarks_pointcloud", rclcpp::QoS(10));
 
-  
   this->declare_parameter("robot_frame", std::string("base_link"));
   this->declare_parameter("publish_robot_frame", std::string("base_link"));
   this->declare_parameter("laser_frame", std::string("laser"));
@@ -33,7 +31,8 @@ robmovil_ekf::LandmarkDetector::LandmarkDetector() :
 
 void robmovil_ekf::LandmarkDetector::on_laser_scan(const sensor_msgs::msg::LaserScan::SharedPtr msg)
 {
-  if(!update_laser_tf(msg->header.stamp)){
+  if (!update_laser_tf(msg->header.stamp))
+  {
     RCLCPP_WARN(this->get_logger(), "%s -> %s transform not yet received, not publishing landmarks", laser_frame.c_str(), robot_frame.c_str());
     return;
   }
@@ -41,64 +40,82 @@ void robmovil_ekf::LandmarkDetector::on_laser_scan(const sensor_msgs::msg::Laser
   /* COMPLETAR: Convertir range,bearing a puntos cartesianos x,y,0. (ojo: descarta puntos en el "infinito")
    * Descartando aquellas mediciones por fuera de los rangos validos */
   std::vector<tf2::Vector3> cartesian;
-  
+
   for (int i = 0; i < msg->ranges.size(); i++)
   {
     /* Utilizar la informacion del mensaje para filtrar y convertir */
     float range = msg->ranges[i];
     float range_min = msg->range_min;
     float range_max = msg->range_max;
-    
+
     float angle_min = msg->angle_min;
     float angle_increment = msg->angle_increment;
 
-    /* COMPLETAR: p debe definirse con informacion valida y 
+    /* COMPLETAR: p debe definirse con informacion valida y
      * en coordenadas cartesianas */
-    tf2::Vector3 p(0,0,0);
-    
+
+    tf2::Vector3 p(range * cos(angle_min + angle_increment * i), range * sin(angle_min + angle_increment * i), 0);
+
     /* convierto el punto en relacion al marco de referencia del laser al marco del robot */
-    p = laser_transform * p;
-    cartesian.push_back(p);
+    if (range < range_max && range > range_min)
+    {
+      p = laser_transform * p;
+      cartesian.push_back(p);
+    }
   }
 
   /* Mensaje del arreglo de landmarks detectados */
   robmovil_msgs::msg::LandmarkArray landmark_array;
   landmark_array.header.stamp = msg->header.stamp;
   landmark_array.header.frame_id = publish_robot_frame;
-  
+
   /* VECTORES AUXILIARES: Pueden utilizar landmark_points para ir acumulando
    * mediciones cercanas */
   std::vector<tf2::Vector3> landmark_points;
-  
+
   // centroides estimados de los postes en coordenadas cartesianas
   std::vector<tf2::Vector3> centroids;
-  
-  for (int i = 0; i < cartesian.size(); i++)
+
+  float distancia_minima = pow(2, 250) for (int i = 0; i < cartesian.size() - 1; i++)
   {
-    
+
     /* COMPLETAR: Acumular, de manera secuencial, mediciones cercanas (distancia euclidea) */
-    
-    // -------
-    
+
+    landmark_points.push_back(cartesian[i]);
+
     /* Al terminarse las mediciones provenientes al landmark que se venia detectando,
      * se calcula la pose del landmark como el centroide de las mediciones */
-
+    float dist = sqrt(
+        ((cartesian[i].x() - cartesian[i + 1].x()) * (cartesian[i].x() - cartesian[i + 1].x())) +
+        ((cartesian[i].y() - cartesian[i + 1].y()) * (cartesian[i].y() - cartesian[i + 1].y())) +
+        ((cartesian[i].z() - cartesian[i + 1].z()) * (cartesian[i].z() - cartesian[i + 1].z())));
+    // distancia entre el punto y laser
+    if ((cartesian[i] - laser_transform).length < distancia_minima)
+    {
+      distancia_minima = (cartesian[i] - laser_transform).length
+    }
+    if (dist < LANDMARK_DIAMETER)
+    {
+      continue;
+    }
     RCLCPP_INFO(this->get_logger(), "landmark con %zu puntos", landmark_points.size());
-    
-    tf2::Vector3 centroid(0,0,0);
+
+    tf2::Vector3 centroid(0, 0, 0);
 
     /* COMPLETAR: calcular el centroide de los puntos acumulados */
+    tf2::Vector3 lmin(0, 0, 0); // USAR DISTANCIA MINIMA
+    lmin + normalize(lmin) * LANDMARK_DIAMETER;
 
     RCLCPP_INFO(this->get_logger(), "landmark detectado (cartesianas): %f %f %f", centroid.getX(), centroid.getY(), centroid.getZ());
     centroids.push_back(centroid);
 
     /* Convertir el centroide a coordenadas polares, construyendo el mensaje requerido */
     robmovil_msgs::msg::Landmark landmark;
-    
-    float r = 0; // distancia desde el robot al centroide
+
+    float r = sqrt(centroid.x() * centroid.x() + centroid.y() * centroid.y()); // distancia desde el robot al centroide
     landmark.range = r;
-    
-    float a = 0; // angulo de la recta que conecta al robot con el centroide
+
+    float a = atan2(centroid.y(), centroid.x()); // angulo de la recta que conecta al robot con el centroide
     landmark.bearing = a;
 
     /* Fin Completar */
@@ -112,13 +129,14 @@ void robmovil_ekf::LandmarkDetector::on_laser_scan(const sensor_msgs::msg::Laser
   }
 
   /* Publicamos el mensaje de los landmarks encontrados */
-  if (!landmark_array.landmarks.empty()){
+  if (!landmark_array.landmarks.empty())
+  {
     landmark_pub->publish(landmark_array);
     publish_pointcloud(landmark_array.header, centroids);
   }
 }
 
-bool robmovil_ekf::LandmarkDetector::update_laser_tf(const rclcpp::Time& required_time)
+bool robmovil_ekf::LandmarkDetector::update_laser_tf(const rclcpp::Time &required_time)
 {
   try
   {
@@ -129,12 +147,12 @@ bool robmovil_ekf::LandmarkDetector::update_laser_tf(const rclcpp::Time& require
   catch (tf2::TransformException &ex)
   {
     RCLCPP_WARN(this->get_logger(), "No se pudo transformar %s a %s: %s",
-              robot_frame.c_str(), laser_frame.c_str(), ex.what());
+                robot_frame.c_str(), laser_frame.c_str(), ex.what());
     return false;
   }
 }
 
-void robmovil_ekf::LandmarkDetector::publish_pointcloud(const std_msgs::msg::Header& header, const std::vector<tf2::Vector3>& landmark_positions)
+void robmovil_ekf::LandmarkDetector::publish_pointcloud(const std_msgs::msg::Header &header, const std::vector<tf2::Vector3> &landmark_positions)
 {
   sensor_msgs::msg::PointCloud pointcloud;
   pointcloud.header.stamp = header.stamp;

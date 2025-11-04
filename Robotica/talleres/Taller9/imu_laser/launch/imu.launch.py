@@ -10,6 +10,6 @@ def generate_launch_description():
             name="imu_calibrator",
             output="screen",
             parameters=[{"use_sim_time": True},
-                        {"calibrate": 0}]
+                        {"calibrate": 10}]
         ),
     ])

@@ -43,7 +43,7 @@ void robmovil_ekf::IMUCalibrator::calculate_bias()
 
   for (int i = 0; i < size; i++)
   {
-    bias += calibration_data_[i];
+    bias_ += calibration_data_[i];
   }
 
   bias_ = bias_ / size;
@@ -90,9 +90,10 @@ void robmovil_ekf::IMUCalibrator::on_imu_measurement(const sensor_msgs::msg::Imu
     RCLCPP_INFO(this->get_logger(), "Sin Bias: vel_x: %f , vel_y: %f , vel_z: %f", vel_sin_bias.getX(), vel_sin_bias.getY(), vel_sin_bias.getZ());
 
     // COMPLETAR: Integrar la velocidad angular corregida durante un intervalo de tiempo
+    tf2::Vector3 delta_angulos = delta_t * vel_sin_bias;
 
     tf2::Quaternion delta_q;
-    delta_q.setRPY(0, 0, 0);
+    delta_q.setRPY(delta_angulos.x(), delta_angulos.y(), delta_angulos.z());
     orientacion_estimada_ *= delta_q;
     orientacion_estimada_.normalize();
 
