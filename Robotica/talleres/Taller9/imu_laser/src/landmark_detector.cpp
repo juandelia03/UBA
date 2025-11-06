@@ -76,7 +76,8 @@ void robmovil_ekf::LandmarkDetector::on_laser_scan(const sensor_msgs::msg::Laser
   // centroides estimados de los postes en coordenadas cartesianas
   std::vector<tf2::Vector3> centroids;
 
-  float distancia_minima = pow(2, 250) for (int i = 0; i < cartesian.size() - 1; i++)
+  float distancia_minima = pow(2, 250);
+  for (int i = 0; i < cartesian.size() - 1; i++)
   {
 
     /* COMPLETAR: Acumular, de manera secuencial, mediciones cercanas (distancia euclidea) */
@@ -85,14 +86,17 @@ void robmovil_ekf::LandmarkDetector::on_laser_scan(const sensor_msgs::msg::Laser
 
     /* Al terminarse las mediciones provenientes al landmark que se venia detectando,
      * se calcula la pose del landmark como el centroide de las mediciones */
+    // distancia entre este punto y el siguiente
     float dist = sqrt(
         ((cartesian[i].x() - cartesian[i + 1].x()) * (cartesian[i].x() - cartesian[i + 1].x())) +
         ((cartesian[i].y() - cartesian[i + 1].y()) * (cartesian[i].y() - cartesian[i + 1].y())) +
         ((cartesian[i].z() - cartesian[i + 1].z()) * (cartesian[i].z() - cartesian[i + 1].z())));
-    // distancia entre el punto y laser
+
+    // distancia entre el punto y laser, hay que guardar el minimo
+    // SE HACE ASI???
     if ((cartesian[i] - laser_transform).length < distancia_minima)
     {
-      distancia_minima = (cartesian[i] - laser_transform).length
+      distancia_minima = (cartesian[i] - laser_transform).length;
     }
     if (dist < LANDMARK_DIAMETER)
     {
@@ -103,6 +107,8 @@ void robmovil_ekf::LandmarkDetector::on_laser_scan(const sensor_msgs::msg::Laser
     tf2::Vector3 centroid(0, 0, 0);
 
     /* COMPLETAR: calcular el centroide de los puntos acumulados */
+
+    // PARA HACER EL CENTROIDE SUMO TODO Y DIVIDO O USO LA CUENTA DE LA DIAPO
     tf2::Vector3 lmin(0, 0, 0); // USAR DISTANCIA MINIMA
     lmin + normalize(lmin) * LANDMARK_DIAMETER;
 
