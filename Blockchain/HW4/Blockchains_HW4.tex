@@ -129,7 +129,7 @@ for a total of \numpoints \ points.
     \begin{solution} %Uncomment and type your solution here
         El ataque consta de lo siguiente:
         \begin{itemize}
-          \item{Supone que en una ronda r todos los participantes tienen una cadena de longitud $\lambda m$}
+          \item{Suponer que en una ronda r todos los participantes tienen una cadena de longitud $\lambda m$}
           \item{
             El atacante construye una época entera por su cuenta con Timestamps falsos, lo que resulta en una dificultad muy alta para la siguiente época.
             }
@@ -156,15 +156,28 @@ for a total of \numpoints \ points.
       \begin{parts}
       \part[5] Consider the \textit{long range attack} on a PoS blockchain in a permissionless environment. Assume that an honest-stake majority always holds, and that all the parties are aware of the global clock. Describe the scenarios wherein the honest parties lose their advantages, and explain why freshly joining parties cannot distinguish an honest chain from other chains by the longest-chain selection rule.
       
-    %\begin{solution} %Uncomment and type your solution here
+    \begin{solution} %Uncomment and type your solution here
+        Como PoS es un recurso virual es "simulable" a bajo costo, a diferncia de PoW que hay que gastar recursis fisicos.
+        Por esto es posible construir una cadena alternativa, sin ningun costo sustancial. 
         
-    %\end{solution}
+        Como  para el consenso se usa la regla de la cadena mas larga esto significa un problema.
+        
+        Si una "partie" se une por primera vez, o no se conecta durante mucho tiempo no tiene manera de distinguir estas
+        cadenas ficticias con las reales.
+    \end{solution}
     
     \part[5] A PoS protocol performs leader election based on the stakes each party owns. Recall that the initial stake distribution is hard-coded in the genesis block. Does a PoS protocol assume a PKI? Further, the stakes in a party's account have monetary values. Where can the initial stakes come from?
         
-    %\begin{solution} %Uncomment and type your solution here
-        
-    %\end{solution}
+    \begin{solution} %Uncomment and type your solution here
+        Si asume una forma de PKI. El protocolo hace una eleccion segun el stake de cada party. 
+        Ese party demuestra que es el dueño de ese stake con un esquema de PKI, su public key esta asociada a ese stake.
+
+        Como en el bloque genesis se define la distribucion inicial de stake, se podria hacer algun tipo de "venta" de ese stake. 
+        Una vez que partys tienen stake pueden empezar a ser elegibles para ser lideres y  crear bloques nuevos. A su vez 
+        ellos podrian vender stake a otros patys y que la red se amplie.
+
+        El stake podria seguir expnandiendose por ejemplo recompensando a los lideres que crean bloques validos con stake nuevo.
+    \end{solution}
 
 \end{parts}
 
@@ -175,15 +188,39 @@ for a total of \numpoints \ points.
 
 \part[4] Enumerate the security properties a VRF should satisfy. 
 
-   %\begin{solution} %Uncomment and type your solution here
-        
-    %\end{solution}
+    \begin{solution} %Uncomment and type your solution here
+      \begin{itemize}
+        \item{El resultado de una VRF dado un input X debe ser Pseudo aleatorio}
+        \item{Para un par (VK,SK) y un input X el output debe ser unico}
+        \item{Solo quien tiene la private key puede computar el hash, pero cualquier con la public key puede ver la correctitud del hash}
+      \end{itemize}    
+    \end{solution}
     
 \part[6] We stated in class that given a hash function, modeled as a \textit{random oracle}, and an unforgeable signature scheme, VRFs are readily realizable.  Show that that's indeed the case by proposing a construction and arguing its security---i.e., it achieves the desired security properties. Follow the VRF terminology we used in class.
 
-    %\begin{solution} %Uncomment and type your solution here
+    \begin{solution} %Uncomment and type your solution here
+        Tomemos:
+        \begin{itemize}
+          \item{Keygen(r) $\rightarrow$ (VK,SK) que genera el par de claves par al VRF. Por hipotesis tenemos un esquema
+          de firmas no falsificables}
+          \item{Eval(SK,X) $\rightarrow$ (Y,$\Pi$) Que dado un input X genera el string Y que es pseudorandom y una prueba $\Pi$. 
+          Por hipotesis tenemos una funcion de Hash modelada como un oraculo aleatorio}
+          \item{Este algoritmo es ejecutado por cualquier para verificar que Y es el resultado correcto  para X con la clave pública VK y la prueba.}
+        \end{itemize}
+
+        Veamos que esto es suficiente:
         
-    %\end{solution}
+        \begin{itemize}
+          \item{El resultado es PseudoAleatorio: Como por hipotesis tenemos un oraculo aleatorio y SK es secreto, nadie que conozca
+          X puede conocer el valor de Y. Ese valor de Y modela un valor aleatorio para el mundo exterior ya que no hay forma
+          de con el "reconstruir" x}
+          \item{El resultado es unico: Para un SK y X fijo el resultado va a ser unico porque tenemos un oraculo aleatorio}
+          \item{El resultado es verificable: El esquema de firmas fue generado con un esquema de firmas no falsificables, por lo que
+          los resultados son tanto verificables como seguros. Ya que cada output puede verificarse correcto mediante $\Pi$ y
+          y como no se pueden falsificar las firmas es seguro.
+          }
+        \end{itemize}
+    \end{solution}
 
 \end{parts}
 
@@ -194,9 +231,11 @@ for a total of \numpoints \ points.
          
          \part[5] We saw in class that in the Ouroboros protocol the slot leader election process is abstracted out and modeled as an ``ideal functionality.'' Describe one realistic approach to elect the slot leader, and explain why there are $\bot$ symbols in the characteristic strings.
          
-     %\begin{solution} %Uncomment and type your solution here
-        
-    %\end{solution}
+          \begin{solution} %Uncomment and type your solution here
+            En la red el tiempo esta dividido en rondas llamadas slots. El simbolo $\bot$ es un slot vacio.
+
+            ....
+          \end{solution}
    
         \part[5] Describe the implementation of the {\em dynamic} stake setting. Why can't the parties use the most recent stake distribution (i.e., the stake distribution at the end of the previous epoch)?
 
