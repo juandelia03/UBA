@@ -76,7 +76,6 @@ void robmovil_ekf::LandmarkDetector::on_laser_scan(const sensor_msgs::msg::Laser
   // centroides estimados de los postes en coordenadas cartesianas
   std::vector<tf2::Vector3> centroids;
 
-  float distancia_minima = pow(2, 250);
   for (int i = 0; i < cartesian.size() - 1; i++)
   {
 
@@ -87,30 +86,37 @@ void robmovil_ekf::LandmarkDetector::on_laser_scan(const sensor_msgs::msg::Laser
     /* Al terminarse las mediciones provenientes al landmark que se venia detectando,
      * se calcula la pose del landmark como el centroide de las mediciones */
     // distancia entre este punto y el siguiente
-    float dist = sqrt(
-        ((cartesian[i].x() - cartesian[i + 1].x()) * (cartesian[i].x() - cartesian[i + 1].x())) +
-        ((cartesian[i].y() - cartesian[i + 1].y()) * (cartesian[i].y() - cartesian[i + 1].y())) +
-        ((cartesian[i].z() - cartesian[i + 1].z()) * (cartesian[i].z() - cartesian[i + 1].z())));
+
+    // float dist = sqrt(
+    //     ((cartesian[i].getX() - cartesian[i + 1].getX()) * (cartesian[i].getX() - cartesian[i + 1].getX())) +
+    //     ((cartesian[i].getY() - cartesian[i + 1].getY()) * (cartesian[i].getY() - cartesian[i + 1].getY())) +
+    //     ((cartesian[i].getZ() - cartesian[i + 1].getZ()) * (cartesian[i].getZ() - cartesian[i + 1].getZ())));
+    float dist = hypot(cartesian[i].getX() - cartesian[i + 1].getX(), cartesian[i].getY() - cartesian[i + 1].getY());
 
     // distancia entre el punto y laser, hay que guardar el minimo
-    // SE HACE ASI???
-    if ((cartesian[i] - laser_transform).length < distancia_minima)
-    {
-      distancia_minima = (cartesian[i] - laser_transform).length;
-    }
-    if (dist < LANDMARK_DIAMETER)
+    if (dist < LANDMARK_DIAMETER * 1.2 & !(i == cartesian.size() - 2))
     {
       continue;
     }
+
     RCLCPP_INFO(this->get_logger(), "landmark con %zu puntos", landmark_points.size());
 
     tf2::Vector3 centroid(0, 0, 0);
 
     /* COMPLETAR: calcular el centroide de los puntos acumulados */
 
-    // PARA HACER EL CENTROIDE SUMO TODO Y DIVIDO O USO LA CUENTA DE LA DIAPO
-    tf2::Vector3 lmin(0, 0, 0); // USAR DISTANCIA MINIMA
-    lmin + normalize(lmin) * LANDMARK_DIAMETER;
+    // busco lmin
+    float distancia_minima = landmark_points[0].length();
+    for (int j = 0; j < landmark_points.size(); j++)
+    {
+      if ((landmark_points[j]).length() < distancia_minima)
+      {
+        distancia_minima = (landmark_points[j]).length();
+        centroid = landmark_points[j];
+      }
+    }
+    tf2::Vector3 lmin(centroid.x(), centroid.y(), centroid.z());
+    centroid = centroid + lmin.normalize() * (LANDMARK_DIAMETER / 2.0);
 
     RCLCPP_INFO(this->get_logger(), "landmark detectado (cartesianas): %f %f %f", centroid.getX(), centroid.getY(), centroid.getZ());
     centroids.push_back(centroid);
