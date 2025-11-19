@@ -92,9 +92,12 @@ void robmovil_ekf::LocalizerEKF::makeBaseA(void)
 void robmovil_ekf::LocalizerEKF::makeA(void)
 {
   /* COMPLETAR: Utilizando variables globales x, u y delta_t */
-  
-  A(1,3) = 0;
-  A(2,3) = 0;
+  double robot_x = x(1);
+  double robot_y = x(2);
+  double robot_theta = x(3);
+  double v_0 = u(1);
+  A(1,3) = -sin(robot_theta)*v_0*delta_t;
+  A(2,3) = cos(robot_theta)*v_0*delta_t;
 
   RCLCPP_INFO(rclcpp::get_logger("robmovil_ekf"), "A: %d", A);
 }
@@ -105,15 +108,15 @@ void robmovil_ekf::LocalizerEKF::makeBaseW(void)
 {
   /* COMPLETAR: Con las derivadas del modelo de movimiento (o proceso) con respecto al ruido ADITIVO w */
   
-  W(1,1) = 0;
+  W(1,1) = 1;
   W(1,2) = 0;
   W(1,3) = 0;
   W(2,1) = 0;
-  W(2,2) = 0;
+  W(2,2) = 1;
   W(2,3) = 0;
   W(3,1) = 0;
   W(3,2) = 0;
-  W(3,3) = 0;
+  W(3,3) = 1;
 
 
 }
@@ -213,12 +216,10 @@ void robmovil_ekf::LocalizerEKF::makeProcess(void)
    * 
    * Guardar el resultado en la variable global x */
    LocalizerEKF::Vector x_old(x); // X_t-1
-   
-  x(1) = 0;
-  x(2) = 0;
-  x(3) = angles::normalize_angle(0);
-   
-
+   // QUE HACEMOS CON LOS W???
+  x(1) = x_old(1) - 1 + u(1)*delta_t*cos(x(3)); // xt−1 + vt∆tcos (θt) + wt,x; 
+  x(2) = x_old(2) - 1 + u(1)*delta_t*sin(x(3)); // yt−1 + vt∆tsin (θt) + wt,y
+  x(3) = angles::normalize_angle(x_old(3) + u(2)*delta_t); // θt−1 + ωt∆t + wt,θ
   RCLCPP_INFO(rclcpp::get_logger("robmovil_ekf"), "Process model: X_t-1: %d, X_t: %d, delta_t: %d", x_old, x, delta_t);
 }
 
