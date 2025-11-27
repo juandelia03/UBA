@@ -92,6 +92,7 @@ void robmovil_ekf::LocalizerEKF::makeBaseA(void)
 void robmovil_ekf::LocalizerEKF::makeA(void)
 {
   /* COMPLETAR: Utilizando variables globales x, u y delta_t */
+  makeBaseA();
   double robot_x = x(1);
   double robot_y = x(2);
   double robot_theta = x(3);
@@ -170,11 +171,17 @@ void robmovil_ekf::LocalizerEKF::makeH(void)
   } else {
     
     /* COMPLETAR: Calcular H en base al landmark del mapa relativo al robot */
-    
-    H(1,1) = 0;
-    H(1,2) = 0;
-    H(2,1) = 0;
-    H(2,2) = 0;
+    double dx = diff_robot_landmark.getX(); 
+    double dy = diff_robot_landmark.getY();
+    double r  = sqrt((pow(dx,2)) + pow(dy,2));
+
+
+    H(1,1) = -dx/r;
+    H(1,2) = -dy/r;
+    H(1,3) = 0;
+    H(2,1) = dy/pow(r,2);
+    H(2,2) = -dx/pow(r,2);
+    H(2,3) = -1;
 
   }
 
@@ -186,10 +193,10 @@ void robmovil_ekf::LocalizerEKF::makeBaseV(void)
 {
   /* COMPLETAR: Con las derivadas del modelo de sensado con respecto al ruido ADITIVO v */
   
-  V(1,1) = 0;
+  V(1,1) = 1;
   V(1,2) = 0;
   V(2,1) = 0;
-  V(2,2) = 0;
+  V(2,2) = 1;
   
   RCLCPP_INFO(rclcpp::get_logger("robmovil_ekf"), "V: %d", V);
 }
@@ -217,8 +224,8 @@ void robmovil_ekf::LocalizerEKF::makeProcess(void)
    * Guardar el resultado en la variable global x */
    LocalizerEKF::Vector x_old(x); // X_t-1
    // QUE HACEMOS CON LOS W???
-  x(1) = x_old(1) - 1 + u(1)*delta_t*cos(x(3)); // xt−1 + vt∆tcos (θt) + wt,x; 
-  x(2) = x_old(2) - 1 + u(1)*delta_t*sin(x(3)); // yt−1 + vt∆tsin (θt) + wt,y
+  x(1) = x_old(1) + u(1)*delta_t*cos(x(3)); // x_t−1 + vt∆tcos (θt) + wt,x; 
+  x(2) = x_old(2) + u(1)*delta_t*sin(x(3)); // y_t−1 + vt∆tsin (θt) + wt,y
   x(3) = angles::normalize_angle(x_old(3) + u(2)*delta_t); // θt−1 + ωt∆t + wt,θ
   RCLCPP_INFO(rclcpp::get_logger("robmovil_ekf"), "Process model: X_t-1: %d, X_t: %d, delta_t: %d", x_old, x, delta_t);
 }
@@ -252,9 +259,12 @@ bool robmovil_ekf::LocalizerEKF::find_corresponding_landmark(const tf2::Vector3&
    
   for (int i = 0; i < map_landmarks.size(); i++)
   {
-    /* COMPLETAR */
-    corresponding_landmark = map_landmarks[i];
-    found = false;
+    float current_distance = (measured_landmark - map_landmarks[i]).length();
+    if(current_distance < min_distance && current_distance < delta_radio){
+      min_distance = current_distance;
+      corresponding_landmark = map_landmarks[i];
+      found = true;
+    }
     
   }
 
