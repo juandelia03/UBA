@@ -65,7 +65,6 @@ def parse_fdb(output: str):
             continue
         port, vlan, mac, age = parts[0], parts[1], parts[2], parts[3]
         entries.append({"port": port, "vlan": vlan, "mac": mac, "age": age})
-
     return entries, None
 
 

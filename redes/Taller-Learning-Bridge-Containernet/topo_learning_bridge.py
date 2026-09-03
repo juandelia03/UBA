@@ -1,13 +1,54 @@
 #!/usr/bin/env python3
 
+import re
+import subprocess
+
 from mininet.net import Containernet
 from mininet.node import OVSSwitch
 from mininet.cli import CLI
 from mininet.log import setLogLevel
 
 
+def cleanup_stale_state():
+    """Elimina restos de una ejecución anterior de esta topología."""
+    subprocess.run(
+        ["pkill", "-9", "-f", "mininet:"],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        check=False,
+    )
+
+    for bridge in ("B1", "B2", "B3"):
+        subprocess.run(
+            ["ovs-vsctl", "--if-exists", "del-br", bridge],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=False,
+        )
+
+    result = subprocess.run(
+        ["ip", "-o", "link", "show"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    for line in result.stdout.splitlines():
+        match = re.match(r"\d+:\s+([^:@]+)", line)
+        if match and re.fullmatch(r"(?:B[123]|[XYZW])-eth\d+", match.group(1)):
+            subprocess.run(
+                ["ip", "link", "delete", match.group(1)],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+                check=False,
+            )
+
+
 def main():
     setLogLevel("error")
+
+    # Si una ejecución anterior terminó abruptamente, pueden quedar interfaces
+    # virtuales con los mismos nombres. Las eliminamos antes de recrear la red.
+    cleanup_stale_state()
 
     net = Containernet(controller=None)
     
@@ -59,4 +100,8 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    finally:
+        # También limpia ante Ctrl+C o ante un error durante la construcción.
+        cleanup_stale_state()
