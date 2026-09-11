@@ -1,0 +1,26 @@
+# MAC Snapshot
+# Timestamp: 2026-09-08T22:40:42
+
+
+===== BRIDGE s1 =====
+port  VLAN  MAC                Age
+
+===== BRIDGE s2 =====
+port  VLAN  MAC                Age
+
+===== BRIDGE s3 =====
+port  VLAN  MAC                Age
+
+===== BRIDGE s4 =====
+port  VLAN  MAC                Age
+
+===== BRIDGE s5 =====
+port  VLAN  MAC                Age
+
+===== BRIDGE s6 =====
+port  VLAN  MAC                Age
+
+===== BRIDGE s7 =====
+port  VLAN  MAC                Age
+
+====================================================

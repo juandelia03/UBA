@@ -1,0 +1,30 @@
+# STP Snapshot
+# Timestamp: 2026-09-08T22:39:37
+
+
+===== BRIDGE s4 =====
+---- s4 ----
+Root ID:
+  stp-priority  32768
+  stp-system-id   3a:da:8f:d3:90:47
+  stp-hello-time  2s
+  stp-max-age     20s
+  stp-fwd-delay   15s
+  root-port       s4-eth1
+  root-path-cost  2
+
+Bridge ID:
+  stp-priority  32768
+  stp-system-id   92:57:8c:b5:40:46
+  stp-hello-time  2s
+  stp-max-age     20s
+  stp-fwd-delay   15s
+
+  Interface  Role       State      Cost  Pri.Nbr 
+  ---------- ---------- ---------- ----- -------
+  s4-eth3    designated forwarding 2     128.1
+  s4-eth1    root       forwarding 2     128.2
+  s4-eth4    designated forwarding 2     128.3
+  s4-eth2    designated forwarding 2     128.4
+
+====================================================

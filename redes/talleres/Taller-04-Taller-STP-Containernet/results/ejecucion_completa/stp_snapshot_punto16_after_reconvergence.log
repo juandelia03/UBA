@@ -1,0 +1,171 @@
+# STP Snapshot
+# Timestamp: 2026-09-08T22:43:59
+
+
+===== BRIDGE s1 =====
+---- s1 ----
+Root ID:
+  stp-priority  4096
+  stp-system-id   92:57:8c:b5:40:46
+  stp-hello-time  2s
+  stp-max-age     20s
+  stp-fwd-delay   15s
+  root-port       s1-eth2
+  root-path-cost  4
+
+Bridge ID:
+  stp-priority  32768
+  stp-system-id   9a:d7:9d:eb:52:4c
+  stp-hello-time  1s
+  stp-max-age     10s
+  stp-fwd-delay   6s
+
+  Interface  Role       State      Cost  Pri.Nbr 
+  ---------- ---------- ---------- ----- -------
+  s1-eth2    root       forwarding 2     128.1
+  s1-eth1    designated forwarding 2     128.2
+  s1-eth3    alternate  blocking   2     128.3
+
+===== BRIDGE s2 =====
+---- s2 ----
+Root ID:
+  stp-priority  4096
+  stp-system-id   92:57:8c:b5:40:46
+  stp-hello-time  2s
+  stp-max-age     20s
+  stp-fwd-delay   15s
+  root-port       s2-eth2
+  root-path-cost  2
+
+Bridge ID:
+  stp-priority  32768
+  stp-system-id   3a:da:8f:d3:90:47
+  stp-hello-time  1s
+  stp-max-age     10s
+  stp-fwd-delay   6s
+
+  Interface  Role       State      Cost  Pri.Nbr 
+  ---------- ---------- ---------- ----- -------
+  s2-eth3    designated forwarding 2     128.1
+  s2-eth2    root       forwarding 2     128.2
+  s2-eth1    designated forwarding 2     128.3
+
+===== BRIDGE s3 =====
+---- s3 ----
+Root ID:
+  stp-priority  4096
+  stp-system-id   92:57:8c:b5:40:46
+  stp-hello-time  2s
+  stp-max-age     20s
+  stp-fwd-delay   15s
+  root-port       s3-eth2
+  root-path-cost  2
+
+Bridge ID:
+  stp-priority  32768
+  stp-system-id   ba:10:c8:03:0f:42
+  stp-hello-time  1s
+  stp-max-age     10s
+  stp-fwd-delay   6s
+
+  Interface  Role       State      Cost  Pri.Nbr 
+  ---------- ---------- ---------- ----- -------
+  s3-eth2    root       forwarding 2     128.1
+  s3-eth1    designated forwarding 2     128.2
+
+===== BRIDGE s4 =====
+---- s4 ----
+Root ID:
+  stp-priority  4096
+  stp-system-id   92:57:8c:b5:40:46
+  stp-hello-time  1s
+  stp-max-age     10s
+  stp-fwd-delay   6s
+  This bridge is the root
+
+Bridge ID:
+  stp-priority  4096
+  stp-system-id   92:57:8c:b5:40:46
+  stp-hello-time  1s
+  stp-max-age     10s
+  stp-fwd-delay   6s
+
+  Interface  Role       State      Cost  Pri.Nbr 
+  ---------- ---------- ---------- ----- -------
+  s4-eth3    designated forwarding 2     128.1
+  s4-eth1    designated forwarding 2     128.2
+  s4-eth4    designated forwarding 2     128.3
+  s4-eth2    designated forwarding 2     128.4
+
+===== BRIDGE s5 =====
+---- s5 ----
+Root ID:
+  stp-priority  4096
+  stp-system-id   92:57:8c:b5:40:46
+  stp-hello-time  2s
+  stp-max-age     20s
+  stp-fwd-delay   15s
+  root-port       s5-eth1
+  root-path-cost  4
+
+Bridge ID:
+  stp-priority  32768
+  stp-system-id   f2:7f:b7:65:bf:4d
+  stp-hello-time  1s
+  stp-max-age     10s
+  stp-fwd-delay   6s
+
+  Interface  Role       State      Cost  Pri.Nbr 
+  ---------- ---------- ---------- ----- -------
+  s5-eth2    alternate  blocking   2     128.1
+  s5-eth1    root       forwarding 2     128.2
+
+===== BRIDGE s6 =====
+---- s6 ----
+Root ID:
+  stp-priority  4096
+  stp-system-id   92:57:8c:b5:40:46
+  stp-hello-time  2s
+  stp-max-age     20s
+  stp-fwd-delay   15s
+  root-port       s6-eth1
+  root-path-cost  2
+
+Bridge ID:
+  stp-priority  32768
+  stp-system-id   3a:e8:ad:fa:71:4f
+  stp-hello-time  1s
+  stp-max-age     10s
+  stp-fwd-delay   6s
+
+  Interface  Role       State      Cost  Pri.Nbr 
+  ---------- ---------- ---------- ----- -------
+  s6-eth2    designated forwarding 2     128.1
+  s6-eth1    root       forwarding 2     128.2
+
+===== BRIDGE s7 =====
+---- s7 ----
+Root ID:
+  stp-priority  4096
+  stp-system-id   92:57:8c:b5:40:46
+  stp-hello-time  2s
+  stp-max-age     20s
+  stp-fwd-delay   15s
+  root-port       s7-eth3
+  root-path-cost  2
+
+Bridge ID:
+  stp-priority  32768
+  stp-system-id   96:73:68:88:7b:4a
+  stp-hello-time  1s
+  stp-max-age     10s
+  stp-fwd-delay   6s
+
+  Interface  Role       State      Cost  Pri.Nbr 
+  ---------- ---------- ---------- ----- -------
+  s7-eth4    designated forwarding 2     128.1
+  s7-eth2    alternate  blocking   2     128.2
+  s7-eth3    root       forwarding 2     128.3
+  s7-eth1    designated forwarding 2     128.4
+
+====================================================
